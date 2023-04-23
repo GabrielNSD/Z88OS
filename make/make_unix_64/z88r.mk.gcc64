@@ -3,13 +3,14 @@
 # for the GCC compiler
 # 7.3.2017 Rieg
 #############################################################################
-DIRECA = $(HOME)/z88v15os
+#DIRECA = $(HOME)/z88v15os
+DIRECA = /home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS
 DIRUNI = $(DIRECA)/src/z88r/unix
 DIRCOM = $(DIRECA)/src/z88r/common
 DIROUT = $(DIRECA)/bin/unix64
 
 CC = gcc
-CFLAGS = -I$(DIRCOM) -DFR_UNIX -DFR_XDOUB -DFR_XLONG -DFR_LINUX -O2 
+CFLAGS = -g -Wall -pg -I$(DIRCOM) -DFR_UNIX -DFR_XDOUB -DFR_XLONG -DFR_LINUX -O3 -fopt-info-loop-optimized=loop_O3.opt
 
 LDLIBSOX = -lm -lc 
 
@@ -26,6 +27,7 @@ OBJECTSR = z88r.o ale88r.o dyn88r.o clr88.o jaco88.o choy88.o m1.o m2.o \
 z88r: $(OBJECTSR)
 	$(CC) $(CFLAGS) -o $@ $(OBJECTSR) $(LDLIBSOX)
 	mv -f z88r $(DIROUT)
+	rm *.o
 
 z88r.o: $(DIRUNI)/z88r.c
 	$(CC) $(CFLAGS) -c $(DIRUNI)/z88r.c

@@ -1,0 +1,368 @@
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/unix/z88r.c:662:12: optimized: Loop 1 distributed: split to 0 loops and 6 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/unix/z88r.c:672:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/unix/z88r.c:675:12: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/unix/z88r.c:678:13: optimized: Loop 4 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/m1.c:225:13: optimized: Loop 1 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/m1.c:379:21: optimized: loop with 2 iterations completely unrolled (header execution count 268435459)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/m1.c:342:17: optimized: loop with 1 iterations completely unrolled (header execution count 30278074)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/m1.c:340:15: optimized: loop with 1 iterations completely unrolled (header execution count 15136766)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/m2.c:225:13: optimized: loop with 2 iterations completely unrolled (header execution count 89478484)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/cshe88.c:390:15: optimized: loop with 2 iterations completely unrolled (header execution count 132757677)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/cshe88.c:377:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/cshe88.c:418:15: optimized: Loop 6 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/cshe88.c:345:15: optimized: loop with 1 iterations completely unrolled (header execution count 28260611)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/cshe88.c:343:13: optimized: loop with 1 iterations completely unrolled (header execution count 14128186)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/cshe88.c:117:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/cshe88.c:188:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/cshe88.c:213:19: optimized: Loop nest 8 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hexa88.c:367:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hexa88.c:116:13: optimized: Loop 1 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hexa88.c:134:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hexa88.c:153:13: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hexa88.c:178:21: optimized: Loop nest 10 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/lqua88.c:319:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/lqua88.c:116:13: optimized: Loop 1 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/lqua88.c:134:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/lqua88.c:153:13: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/lqua88.c:178:21: optimized: Loop nest 10 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/qshe88.c:368:15: optimized: loop with 2 iterations completely unrolled (header execution count 132299871)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/qshe88.c:355:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/qshe88.c:396:15: optimized: Loop 6 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/qshe88.c:323:15: optimized: loop with 1 iterations completely unrolled (header execution count 42253716)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/qshe88.c:321:13: optimized: loop with 1 iterations completely unrolled (header execution count 21123689)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/qshe88.c:117:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/qshe88.c:188:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/qshe88.c:213:19: optimized: Loop nest 8 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/isod88.c:444:15: optimized: loop with 2 iterations completely unrolled (header execution count 173885333)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/isod88.c:431:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/isod88.c:472:15: optimized: Loop 6 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/isod88.c:399:15: optimized: loop with 1 iterations completely unrolled (header execution count 74081198)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/isod88.c:397:13: optimized: loop with 1 iterations completely unrolled (header execution count 37035044)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/isod88.c:204:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/isod88.c:275:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/isod88.c:298:17: optimized: Loop nest 7 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/tetr88.c:373:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/tetr88.c:172:13: optimized: Loop 1 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/tetr88.c:190:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/tetr88.c:209:13: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/tetr88.c:228:17: optimized: Loop nest 8 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spur88.c:348:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spur88.c:172:13: optimized: Loop 1 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spur88.c:190:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spur88.c:209:13: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spur88.c:228:17: optimized: Loop nest 8 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:383:15: optimized: loop with 2 iterations completely unrolled (header execution count 117695349)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:362:15: optimized: loop with 2 iterations completely unrolled (header execution count 117695349)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:353:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:374:13: optimized: Loop 4 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:395:13: optimized: Loop 6 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:321:15: optimized: loop with 1 iterations completely unrolled (header execution count 37589348)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:319:13: optimized: loop with 1 iterations completely unrolled (header execution count 18791855)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:224:21: optimized: loop with 2 iterations completely unrolled (header execution count 268435456)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:221:21: optimized: loop with 3 iterations completely unrolled (header execution count 268435456)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:207:21: optimized: loop with 2 iterations completely unrolled (header execution count 66364785)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:204:19: optimized: loop with 2 iterations completely unrolled (header execution count 33177416)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:114:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:154:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:157:13: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:192:19: optimized: Loop nest 10 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/apla88.c:195:21: optimized: loop with 2 iterations completely unrolled (header execution count 99532248)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:460:15: optimized: loop with 2 iterations completely unrolled (header execution count 117211600)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:439:15: optimized: loop with 2 iterations completely unrolled (header execution count 117211600)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:430:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:451:13: optimized: Loop 4 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:472:13: optimized: Loop 6 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:398:15: optimized: loop with 1 iterations completely unrolled (header execution count 49936217)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:396:13: optimized: loop with 1 iterations completely unrolled (header execution count 24964364)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:309:19: optimized: loop with 2 iterations completely unrolled (header execution count 268435457)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:306:19: optimized: loop with 3 iterations completely unrolled (header execution count 268435456)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:292:19: optimized: loop with 2 iterations completely unrolled (header execution count 66364785)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:289:17: optimized: loop with 2 iterations completely unrolled (header execution count 33177416)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:201:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:241:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:244:13: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:277:17: optimized: Loop nest 9 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/spla88.c:280:19: optimized: loop with 2 iterations completely unrolled (header execution count 99532248)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:577:15: optimized: loop with 2 iterations completely unrolled (header execution count 171871709)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:556:15: optimized: loop with 2 iterations completely unrolled (header execution count 171871709)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:547:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:568:13: optimized: Loop 4 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:589:13: optimized: Loop 6 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:515:15: optimized: loop with 1 iterations completely unrolled (header execution count 27437472)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:513:13: optimized: loop with 1 iterations completely unrolled (header execution count 13716679)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:224:21: optimized: loop with 2 iterations completely unrolled (header execution count 268435456)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:221:21: optimized: loop with 3 iterations completely unrolled (header execution count 268435456)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:207:21: optimized: loop with 2 iterations completely unrolled (header execution count 66364785)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:204:19: optimized: loop with 2 iterations completely unrolled (header execution count 33177416)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:114:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:154:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:157:13: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:192:19: optimized: Loop nest 10 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/hpla88.c:195:21: optimized: loop with 2 iterations completely unrolled (header execution count 99532248)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88br.c:199:13: optimized: Loop 1 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88br.c:205:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88cr.c:224:33: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88cr.c:322:26: optimized: Loop 11 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bhexa88.c:268:13: optimized: Loop 2 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bhexa88.c:110:13: optimized: Loop 1 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/btetr88.c:317:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/btetr88.c:197:13: optimized: Loop 1 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bqshe88.c:111:13: optimized: loop with 6 iterations completely unrolled (header execution count 18964211)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bspla88.c:324:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bspla88.c:302:15: optimized: loop with 1 iterations completely unrolled (header execution count 76707346)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bspla88.c:300:13: optimized: loop with 1 iterations completely unrolled (header execution count 38347920)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bspla88.c:199:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bspla88.c:208:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bspur88.c:298:13: optimized: loop with 3 iterations completely unrolled (header execution count 107374184)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bspur88.c:295:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bspur88.c:196:13: optimized: Loop 1 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/blqua88.c:243:13: optimized: Loop 2 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/blqua88.c:110:13: optimized: Loop 1 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bcshe88.c:111:13: optimized: Loop 1 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bapla88.c:247:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bapla88.c:225:15: optimized: loop with 1 iterations completely unrolled (header execution count 59637414)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bapla88.c:223:13: optimized: loop with 1 iterations completely unrolled (header execution count 29814235)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bapla88.c:112:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bapla88.c:121:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bhpla88.c:441:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bhpla88.c:419:15: optimized: loop with 1 iterations completely unrolled (header execution count 31563273)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bhpla88.c:417:13: optimized: loop with 1 iterations completely unrolled (header execution count 15779270)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bhpla88.c:112:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bhpla88.c:121:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/ri188r.c:137:15: optimized: Loop 1 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88ai.c:315:11: optimized: loop with 2 iterations completely unrolled (header execution count 30113358)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88dr.c:230:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/m4.c:287:13: optimized: loop with 4 iterations completely unrolled (header execution count 12786476)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/scsh88.c:768:15: optimized: loop with 2 iterations completely unrolled (header execution count 132757677)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/scsh88.c:755:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/scsh88.c:796:15: optimized: Loop 6 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/scsh88.c:723:15: optimized: loop with 1 iterations completely unrolled (header execution count 28260611)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/scsh88.c:721:13: optimized: loop with 1 iterations completely unrolled (header execution count 14128186)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/scsh88.c:166:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/scsh88.c:552:17: optimized: Loop nest 7 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/scsh88.c:540:17: optimized: Loop nest 6 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/scsh88.c:497:17: optimized: Loop nest 12 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/scsh88.c:485:17: optimized: Loop nest 11 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/scsh88.c:274:19: optimized: Loop nest 20 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/scsh88.c:262:19: optimized: Loop nest 19 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shex88.c:663:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shex88.c:180:13: optimized: Loop 1 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shex88.c:198:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shex88.c:446:17: optimized: Loop nest 8 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shex88.c:434:17: optimized: Loop nest 7 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shex88.c:393:17: optimized: Loop nest 13 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shex88.c:381:17: optimized: Loop nest 12 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shex88.c:254:21: optimized: Loop nest 22 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shex88.c:242:21: optimized: Loop nest 21 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/slqu88.c:603:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/slqu88.c:179:13: optimized: Loop 1 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/slqu88.c:197:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/slqu88.c:445:17: optimized: Loop nest 8 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/slqu88.c:433:17: optimized: Loop nest 7 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/slqu88.c:392:17: optimized: Loop nest 13 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/slqu88.c:380:17: optimized: Loop nest 12 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/slqu88.c:253:21: optimized: Loop nest 22 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/slqu88.c:241:21: optimized: Loop nest 21 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sqsh88.c:743:15: optimized: loop with 2 iterations completely unrolled (header execution count 132299871)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sqsh88.c:730:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sqsh88.c:771:15: optimized: Loop 6 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sqsh88.c:698:15: optimized: loop with 1 iterations completely unrolled (header execution count 42253716)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sqsh88.c:696:13: optimized: loop with 1 iterations completely unrolled (header execution count 21123689)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sqsh88.c:165:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sqsh88.c:549:17: optimized: Loop nest 7 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sqsh88.c:537:17: optimized: Loop nest 6 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sqsh88.c:494:17: optimized: Loop nest 12 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sqsh88.c:482:17: optimized: Loop nest 11 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sqsh88.c:273:19: optimized: Loop nest 20 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sqsh88.c:261:19: optimized: Loop nest 19 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/siso88.c:789:15: optimized: loop with 2 iterations completely unrolled (header execution count 173885333)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/siso88.c:776:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/siso88.c:817:15: optimized: Loop 6 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/siso88.c:744:15: optimized: loop with 1 iterations completely unrolled (header execution count 74081198)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/siso88.c:742:13: optimized: loop with 1 iterations completely unrolled (header execution count 37035044)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/siso88.c:513:17: optimized: loop with 3 iterations completely unrolled (header execution count 3093801)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/siso88.c:227:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/siso88.c:603:17: optimized: Loop nest 7 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/siso88.c:594:17: optimized: Loop nest 6 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/siso88.c:554:17: optimized: Loop nest 12 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/siso88.c:542:17: optimized: Loop nest 11 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/siso88.c:333:17: optimized: Loop nest 19 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/siso88.c:321:17: optimized: Loop nest 18 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/stet88.c:644:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/stet88.c:212:13: optimized: Loop 1 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/stet88.c:230:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/stet88.c:471:17: optimized: Loop nest 8 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/stet88.c:459:17: optimized: Loop nest 7 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/stet88.c:418:17: optimized: Loop nest 13 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/stet88.c:406:17: optimized: Loop nest 12 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/stet88.c:281:17: optimized: Loop nest 20 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/stet88.c:269:17: optimized: Loop nest 19 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspu88.c:606:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspu88.c:212:13: optimized: Loop 1 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspu88.c:230:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspu88.c:472:17: optimized: Loop nest 8 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspu88.c:460:17: optimized: Loop nest 7 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspu88.c:419:17: optimized: Loop nest 13 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspu88.c:407:17: optimized: Loop nest 12 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspu88.c:281:17: optimized: Loop nest 20 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspu88.c:269:17: optimized: Loop nest 19 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:624:15: optimized: loop with 2 iterations completely unrolled (header execution count 85908990)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:613:15: optimized: loop with 2 iterations completely unrolled (header execution count 85908990)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:601:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:569:15: optimized: loop with 1 iterations completely unrolled (header execution count 27437472)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:567:13: optimized: loop with 1 iterations completely unrolled (header execution count 13716679)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:466:17: optimized: loop with 2 iterations completely unrolled (header execution count 665179)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:461:17: optimized: loop with 3 iterations completely unrolled (header execution count 665179)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:401:17: optimized: loop with 2 iterations completely unrolled (header execution count 152130)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:396:17: optimized: loop with 3 iterations completely unrolled (header execution count 152130)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:256:19: optimized: loop with 2 iterations completely unrolled (header execution count 8591996)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:251:19: optimized: loop with 3 iterations completely unrolled (header execution count 8591996)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:159:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:168:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:447:17: optimized: Loop nest 8 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:435:17: optimized: Loop nest 7 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:382:17: optimized: Loop nest 15 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:370:17: optimized: Loop nest 14 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:237:19: optimized: Loop nest 25 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sapl88.c:225:19: optimized: Loop nest 24 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:676:15: optimized: loop with 2 iterations completely unrolled (header execution count 70842162)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:665:15: optimized: loop with 2 iterations completely unrolled (header execution count 70842162)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:653:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:621:15: optimized: loop with 1 iterations completely unrolled (header execution count 30181226)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:619:13: optimized: loop with 1 iterations completely unrolled (header execution count 15088350)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:525:17: optimized: loop with 2 iterations completely unrolled (header execution count 1768200)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:520:17: optimized: loop with 3 iterations completely unrolled (header execution count 1768200)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:460:17: optimized: loop with 2 iterations completely unrolled (header execution count 1453517)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:455:17: optimized: loop with 3 iterations completely unrolled (header execution count 1453517)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:400:17: optimized: loop with 3 iterations completely unrolled (header execution count 1693347)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:316:17: optimized: loop with 2 iterations completely unrolled (header execution count 11298474)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:311:17: optimized: loop with 3 iterations completely unrolled (header execution count 11298474)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:221:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:230:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:506:17: optimized: Loop nest 8 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:494:17: optimized: Loop nest 7 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:441:17: optimized: Loop nest 15 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:429:17: optimized: Loop nest 14 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:297:17: optimized: Loop nest 24 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sspl88.c:285:17: optimized: Loop nest 23 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:831:15: optimized: loop with 2 iterations completely unrolled (header execution count 171871709)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:820:15: optimized: loop with 2 iterations completely unrolled (header execution count 171871709)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:808:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:776:15: optimized: loop with 1 iterations completely unrolled (header execution count 27437472)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:774:13: optimized: loop with 1 iterations completely unrolled (header execution count 13716679)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:479:19: optimized: loop with 2 iterations completely unrolled (header execution count 339241)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:474:19: optimized: loop with 3 iterations completely unrolled (header execution count 339241)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:414:17: optimized: loop with 2 iterations completely unrolled (header execution count 77586)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:409:17: optimized: loop with 3 iterations completely unrolled (header execution count 77586)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:257:19: optimized: loop with 2 iterations completely unrolled (header execution count 4381919)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:252:19: optimized: loop with 3 iterations completely unrolled (header execution count 4381919)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:160:13: optimized: Loop 1 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:169:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:460:19: optimized: Loop nest 8 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:448:19: optimized: Loop nest 7 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:395:17: optimized: Loop nest 15 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:383:17: optimized: Loop nest 14 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:238:19: optimized: Loop nest 24 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:226:19: optimized: Loop nest 23 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shpl88.c:351:17: optimized: loop with 3 iterations completely unrolled (header execution count 94655)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88er.c:472:19: optimized: loop with 2 iterations completely unrolled (header execution count 3732787)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88er.c:696:19: optimized: loop with 2 iterations completely unrolled (header execution count 3732787)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88er.c:2092:19: optimized: loop with 2 iterations completely unrolled (header execution count 206027)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88er.c:635:17: optimized: loop with 1 iterations completely unrolled (header execution count 13825137)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88er.c:626:19: optimized: loop with 1 iterations completely unrolled (header execution count 3732787)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88er.c:952:17: optimized: loop with 1 iterations completely unrolled (header execution count 763062)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88er.c:943:19: optimized: loop with 1 iterations completely unrolled (header execution count 206027)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88er.c:1202:17: optimized: loop with 1 iterations completely unrolled (header execution count 763062)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/z88er.c:1193:19: optimized: loop with 1 iterations completely unrolled (header execution count 206027)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shaq88.c:378:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shaq88.c:116:13: optimized: Loop 1 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shaq88.c:134:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shaq88.c:155:13: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shaq88.c:180:21: optimized: Loop nest 10 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshq88.c:648:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshq88.c:178:13: optimized: Loop 1 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshq88.c:196:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshq88.c:446:17: optimized: Loop nest 8 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshq88.c:434:17: optimized: Loop nest 7 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshq88.c:393:17: optimized: Loop nest 13 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshq88.c:381:17: optimized: Loop nest 12 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshq88.c:254:21: optimized: Loop nest 22 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshq88.c:242:21: optimized: Loop nest 21 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shad88.c:455:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shad88.c:215:13: optimized: Loop 1 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shad88.c:233:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shad88.c:254:13: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shad88.c:275:19: optimized: Loop nest 9 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshd88.c:686:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshd88.c:237:13: optimized: Loop 1 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshd88.c:255:13: optimized: Loop 2 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshd88.c:502:17: optimized: Loop nest 8 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshd88.c:490:17: optimized: Loop nest 7 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshd88.c:449:17: optimized: Loop nest 13 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshd88.c:437:17: optimized: Loop nest 12 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshd88.c:311:19: optimized: Loop nest 21 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshd88.c:299:19: optimized: Loop nest 20 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shaf88.c:179:14: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shaf88.c:282:14: optimized: Loop 7 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shaf88.c:285:14: optimized: Loop 8 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shaf88.c:353:14: optimized: Loop 13 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shaf88.c:192:19: optimized: loop with 1 iterations completely unrolled (header execution count 1606421)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bshaf88.c:278:13: optimized: Loop 3 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bshaf88.c:287:13: optimized: Loop 4 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bshaf88.c:319:14: optimized: Loop 6 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bshaf88.c:322:14: optimized: Loop 7 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bshaf88.c:355:14: optimized: Loop 10 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:835:17: optimized: loop with 3 iterations completely unrolled (header execution count 510517)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:729:17: optimized: loop with 3 iterations completely unrolled (header execution count 322747)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:643:17: optimized: loop with 3 iterations completely unrolled (header execution count 399452)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:521:17: optimized: loop with 3 iterations completely unrolled (header execution count 4010295)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:301:13: optimized: Loop 3 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:314:14: optimized: Loop 4 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:317:14: optimized: Loop 5 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:350:14: optimized: Loop 8 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:396:13: optimized: Loop 12 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:417:13: optimized: Loop 13 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:821:17: optimized: Loop nest 21 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:808:17: optimized: Loop nest 20 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:790:17: optimized: Loop nest 19 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:778:17: optimized: Loop nest 18 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:715:17: optimized: Loop nest 32 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:702:17: optimized: Loop nest 31 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:684:17: optimized: Loop nest 30 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:672:17: optimized: Loop nest 29 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:507:17: optimized: Loop nest 45 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:494:17: optimized: Loop nest 44 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:476:17: optimized: Loop nest 43 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshf88.c:464:17: optimized: Loop nest 42 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shav88.c:179:14: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shav88.c:286:14: optimized: Loop 7 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shav88.c:289:14: optimized: Loop 8 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shav88.c:357:14: optimized: Loop 13 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/shav88.c:192:19: optimized: loop with 1 iterations completely unrolled (header execution count 1216370)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bshav88.c:197:13: optimized: Loop 3 distributed: split to 0 loops and 2 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bshav88.c:206:13: optimized: Loop 4 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bshav88.c:240:14: optimized: Loop 6 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bshav88.c:243:14: optimized: Loop 7 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/bshav88.c:276:14: optimized: Loop 10 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:468:19: optimized: loop with 3 iterations completely unrolled (header execution count 3285266)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:784:17: optimized: loop with 3 iterations completely unrolled (header execution count 269657)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:246:13: optimized: Loop 3 distributed: split to 0 loops and 3 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:259:14: optimized: Loop 4 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:262:14: optimized: Loop 5 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:295:14: optimized: Loop 8 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:341:13: optimized: Loop 12 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:362:13: optimized: Loop 13 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:770:17: optimized: Loop nest 21 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:757:17: optimized: Loop nest 20 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:739:17: optimized: Loop nest 19 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:727:17: optimized: Loop nest 18 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:454:19: optimized: Loop nest 46 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:441:19: optimized: Loop nest 45 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:423:19: optimized: Loop nest 44 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/sshv88.c:411:19: optimized: Loop nest 43 distributed: split to 1 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/timo88.c:214:13: optimized: loop with 2 iterations completely unrolled (header execution count 573035)
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/timo88.c:234:13: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/timo88.c:366:14: optimized: Loop 4 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/timo88.c:369:14: optimized: Loop 5 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/stim88.c:201:14: optimized: Loop 1 distributed: split to 0 loops and 1 library calls.
+/home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS/src/z88r/common/stim88.c:223:14: optimized: Loop 3 distributed: split to 0 loops and 1 library calls.
