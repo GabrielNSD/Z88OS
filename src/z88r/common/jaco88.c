@@ -48,6 +48,8 @@
 * 2.1.2010 Rieg
 ***********************************************************************/
 
+#include <sys/time.h>
+
 /***********************************************************************
 * Fuer UNIX
 ***********************************************************************/
@@ -290,6 +292,9 @@ return(0);
 ***********************************************************************/ 
 int part88(void)
 {
+struct timeval ts,te;
+
+gettimeofday(&ts,NULL);
 extern FR_DOUBLEAY GS;
 extern FR_DOUBLEAY CI;
 
@@ -341,6 +346,13 @@ for(i= 2; i <= nfg; i++)
 /*----------------------------------------------------------------------
 * alles in Ordnung
 *---------------------------------------------------------------------*/
+gettimeofday(&te,NULL);
+int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
+struct timeval tc;
+tc.tv_sec = microseconds/1000000;
+tc.tv_usec = microseconds%1000000;
+
+printf("\nexecution time part88: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
 return 0;   /* alles paletti */
 }
 
@@ -349,6 +361,9 @@ return 0;   /* alles paletti */
 ***********************************************************************/ 
 int cixa88(void)
 {
+struct timeval ts,te;
+
+gettimeofday(&ts,NULL);
 extern FR_DOUBLEAY CI;
 extern FR_DOUBLEAY xa;
 extern FR_DOUBLEAY xi;
@@ -382,6 +397,13 @@ for(k= nfg; k >= 2; k--)
     xa[iez[j]]= xa[iez[j]] - CI[j] * xa[k]; 
   }
 
+gettimeofday(&te,NULL);
+int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
+struct timeval tc;
+tc.tv_sec = microseconds/1000000;
+tc.tv_usec = microseconds%1000000;
+
+printf("\nexecution time cixa88: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
 return 0;
 }
 

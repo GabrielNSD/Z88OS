@@ -9,8 +9,10 @@ DIRUNI = $(DIRECA)/src/z88r/unix
 DIRCOM = $(DIRECA)/src/z88r/common
 DIROUT = $(DIRECA)/bin/unix64
 
+FOPT-INFO = vec-missed
+
 CC = gcc
-CFLAGS = -g -Wall -pg -I$(DIRCOM) -DFR_UNIX -DFR_XDOUB -DFR_XLONG -DFR_LINUX -O3 -fopt-info-loop-optimized=loop_O3.opt
+CFLAGS = -g -Wall -pg -I$(DIRCOM) -DFR_UNIX -DFR_XDOUB -DFR_XLONG -DFR_LINUX -O2 -ftree-vectorize -fopt-info-all-vec=resultado-all-vec.txt
 
 LDLIBSOX = -lm -lc 
 
