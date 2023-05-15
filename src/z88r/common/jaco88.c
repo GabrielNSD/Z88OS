@@ -48,6 +48,8 @@
 * 2.1.2010 Rieg
 ***********************************************************************/
 
+#define NUM_THREADS 4
+
 #include <sys/time.h>
 
 /***********************************************************************
@@ -219,6 +221,7 @@ for(k= 1; k <= maxit; k++)
 *=====================================================================*/ 
   if(sumzae <= rho0)
     {
+    // overhead -> # pragma omp parallel for num_threads(NUM_THREADS) schedule(static,8)
     for(i= 1; i <= nfg; i++)
       rs[i]= v[i];
     wrim88r(0,TX_JACOOK);
@@ -232,6 +235,7 @@ for(k= 1; k <= maxit; k++)
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * g(k) = e(k-1) x g(k-1) - rho(k-1)
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  // overhead -> # pragma omp parallel for num_threads(NUM_THREADS) schedule(static,8)
   for(i= 1; i <= nfg; i++)
     pk[i]= e*pk[i] - xa[i];
     
@@ -254,6 +258,7 @@ for(k= 1; k <= maxit; k++)
 * Nenner g(k) x zz(k) = g(k) x (A x g(k))
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   sumnen= 0.;
+  # pragma omp parallel for num_threads(NUM_THREADS) reduction(+:sumnen)
   for(i= 1; i <= nfg; i++)
     sumnen+= pk[i] * zz[i];
 
@@ -266,6 +271,7 @@ for(k= 1; k <= maxit; k++)
 * v(k)= v(k-1) + qk x g(k)
 * r(k)= r(k-1) + qk x (A x g(k))
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  // # pragma omp parallel for num_threads(NUM_THREADS) schedule(static,8)
   for(i= 1; i <= nfg; i++) 
     {
     v [i]+= q * pk[i];
@@ -315,6 +321,7 @@ facto= 1./(1.+rp);
 
 CI[1]= GS[1];
 
+# pragma omp parallel for num_threads(16) schedule(static, 8) // default(none) firstprivate(ip, GS, nfg, facto) private(i, j) shared(CI)
 for(i= 2; i <= nfg; i++)
   {
   CI[ip[i]]= GS[ip[i]];
@@ -382,6 +389,8 @@ FR_INT4 j,k;
 *---------------------------------------------------------------------*/
 xa[1]= xi[1];
 
+// race condition -># pragma omp parallel for num_threads(4) schedule(static, 4) default(none) firstprivate(nfg, CI, ip, iez,xi) private(k,j) shared(xa) reduction(+:sum)
+// # pragma omp parallel for num_threads(8) schedule(static,4)
 for(k= 2; k <= nfg; k++)
   {
   sum= 0.;
@@ -390,11 +399,17 @@ for(k= 2; k <= nfg; k++)
   xa[k]= (xi[k]-sum)/CI[ip[k]];
   }
 
-for(k= nfg; k >= 2; k--)
+// race condition -> # pragma omp parallel for num_threads(1) schedule(static, 4) firstprivate(nfg, CI, ip, iez) private(k,j) shared(xa)
+# pragma omp parallel for num_threads(8) schedule(static,4)
+for(int k= nfg; k >= 2; k--)
   {
   xa[k]/= CI[ip[k]];
-  for(j= ip[k-1]+1; j <= ip[k]-1; j++)
-    xa[iez[j]]= xa[iez[j]] - CI[j] * xa[k]; 
+  for(int j= ip[k-1]+1; j <= ip[k]-1; j++){
+    // double subtraction = CI[j] * xa[k];
+    // #pragma omp atomic
+    // xa[iez[j]] -= subtraction;
+    xa[iez[j]]= xa[iez[j]] - CI[j] * xa[k];
+  } 
   }
 
 gettimeofday(&te,NULL);
