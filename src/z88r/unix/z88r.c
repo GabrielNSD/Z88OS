@@ -279,6 +279,7 @@ FR_INT4 MAXPEL=0,MAXMAT=0;
 FR_INT4 MAXJNT=0;  /* nicht MAXINT bei Windows! */
 FR_INT4 ICFLAG=1;  /* SICCG-Solver mit Sparse-Speicherung */
 FR_INT4 noci=0,iquiet=0;
+FR_INT4 NUM_THREADS=1;
 
 /*****************************************************************************
 * hauptprogramm
@@ -356,6 +357,18 @@ else
   ale88r(AL_WROCFLAG); 
   stop88r();              
   }      
+
+// Variable number of threads
+char* p;
+if (argc < 3) 
+{
+  NUM_THREADS = 1;
+}
+else 
+{
+long arg = strtol(argv[3], &p, 10);
+NUM_THREADS = arg;
+}
 
 /****************************************************************************
 * Modes ausschreiben
