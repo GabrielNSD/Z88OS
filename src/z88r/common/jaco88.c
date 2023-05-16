@@ -48,9 +48,10 @@
 * 2.1.2010 Rieg
 ***********************************************************************/
 
-#define NUM_THREADS 4
+#define NUM_THREADS 8
 
 #include <sys/time.h>
+#include <stdbool.h>
 
 /***********************************************************************
 * Fuer UNIX
@@ -183,28 +184,46 @@ for(i= 1; i <= nfg; i++)
   zz[i]= 0.;
   }
 
+bool converged = false;
 /*----------------------------------------------------------------------
 * Iterationsschleife
 *---------------------------------------------------------------------*/
 for(k= 1; k <= maxit; k++)
+{
+  sumzae= 0.;
+  # pragma omp parallel num_threads(NUM_THREADS) default(none) \
+		shared(xi,xa,rs,v,zz,GS,pk,ip,iez,sumzae,sumnen,nfg,k,rho0,rho1,eps,e,q, converged)
+  {
+  
+  # pragma omp single nowait
   {
   wrim88r(k,TX_ITERA);
+  }
 
 /*======================================================================
 * Loese Gleichungssystem CI * CIt * xa = xi
 *=====================================================================*/ 
+  # pragma omp single
+  {
   cixa88(); 
-
+  }
+  
+  
 /*======================================================================
 * r x rho
 *=====================================================================*/
-  sumzae= 0.;
+  // sumzae= 0.;
+  # pragma omp for schedule(static,4) reduction(+:sumzae)
   for(i= 1; i <= nfg; i++)
     sumzae+= xi[i] * xa[i];
-    
+  //printf("\nvalor da soma na thread %d: %f\n", omp_get_thread_num(), sumzae);
+
+// printf("\n valor da soma depois do parallel: %f", sumzae);
 /*======================================================================
 * Sonderfall k= 1
 *=====================================================================*/ 
+# pragma omp single
+{
   if(k == 1)
     {
     rho0= sumzae*eps;
@@ -215,27 +234,33 @@ for(k= 1; k <= maxit; k++)
 * e(k-1)= r(k-1) x rho(k-1) / r(k-2) x rho(k-2)
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     e= sumzae/rho1;
+}
 
 /*======================================================================
 * Residuum erreicht ? Auf Wiedersehen.
 *=====================================================================*/ 
   if(sumzae <= rho0)
     {
-    // overhead -> # pragma omp parallel for num_threads(NUM_THREADS) schedule(static,8)
-    for(i= 1; i <= nfg; i++)
+    # pragma omp for schedule(static,4)
+    for(int i= 1; i <= nfg; i++)
       rs[i]= v[i];
+    # pragma omp single
+    {
     wrim88r(0,TX_JACOOK);
     wlog88r(k,LOG_ITERA);
-    return 0;
+    converged = true;
     }
-
+    // return 0;
+    }
+  }
+  if(converged) return 0;
 /*======================================================================
 * ansonsten weitermachen
 *=====================================================================*/ 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * g(k) = e(k-1) x g(k-1) - rho(k-1)
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  // overhead -> # pragma omp parallel for num_threads(NUM_THREADS) schedule(static,8)
+  sumnen= 0.;
   for(i= 1; i <= nfg; i++)
     pk[i]= e*pk[i] - xa[i];
     
@@ -244,10 +269,10 @@ for(k= 1; k <= maxit; k++)
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   zz[1]= GS[1]*pk[1];
 
-  for(i= 2; i <= nfg; i++)
+  for(int i= 2; i <= nfg; i++)
     {
     zz[i]= GS[ip[i]] * pk[i];
-    for(j= ip[i-1]+1; j <= ip[i]-1; j++)
+    for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
       {
       zz[i]     += GS[j] * pk[iez[j]];
       zz[iez[j]]+= GS[j] * pk[i];
@@ -258,20 +283,16 @@ for(k= 1; k <= maxit; k++)
 * Nenner g(k) x zz(k) = g(k) x (A x g(k))
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   sumnen= 0.;
-  # pragma omp parallel for num_threads(NUM_THREADS) reduction(+:sumnen)
   for(i= 1; i <= nfg; i++)
     sumnen+= pk[i] * zz[i];
-
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * qk= r(k-1) x rho(k-1) / [g(k) x (A x g(k))]
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   q= sumzae/sumnen;
-
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * v(k)= v(k-1) + qk x g(k)
 * r(k)= r(k-1) + qk x (A x g(k))
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  // # pragma omp parallel for num_threads(NUM_THREADS) schedule(static,8)
   for(i= 1; i <= nfg; i++) 
     {
     v [i]+= q * pk[i];
@@ -321,7 +342,7 @@ facto= 1./(1.+rp);
 
 CI[1]= GS[1];
 
-# pragma omp parallel for num_threads(16) schedule(static, 8) // default(none) firstprivate(ip, GS, nfg, facto) private(i, j) shared(CI)
+# pragma omp parallel for num_threads(NUM_THREADS) schedule(static, 8)
 for(i= 2; i <= nfg; i++)
   {
   CI[ip[i]]= GS[ip[i]];
@@ -389,8 +410,6 @@ FR_INT4 j,k;
 *---------------------------------------------------------------------*/
 xa[1]= xi[1];
 
-// race condition -># pragma omp parallel for num_threads(4) schedule(static, 4) default(none) firstprivate(nfg, CI, ip, iez,xi) private(k,j) shared(xa) reduction(+:sum)
-// # pragma omp parallel for num_threads(8) schedule(static,4)
 for(k= 2; k <= nfg; k++)
   {
   sum= 0.;
@@ -399,15 +418,10 @@ for(k= 2; k <= nfg; k++)
   xa[k]= (xi[k]-sum)/CI[ip[k]];
   }
 
-// race condition -> # pragma omp parallel for num_threads(1) schedule(static, 4) firstprivate(nfg, CI, ip, iez) private(k,j) shared(xa)
-# pragma omp parallel for num_threads(8) schedule(static,4)
 for(int k= nfg; k >= 2; k--)
   {
   xa[k]/= CI[ip[k]];
   for(int j= ip[k-1]+1; j <= ip[k]-1; j++){
-    // double subtraction = CI[j] * xa[k];
-    // #pragma omp atomic
-    // xa[iez[j]] -= subtraction;
     xa[iez[j]]= xa[iez[j]] - CI[j] * xa[k];
   } 
   }
