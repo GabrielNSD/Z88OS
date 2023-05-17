@@ -125,8 +125,6 @@ for(i = 1;i <= nfg;i++)
 
 return(0);
 }
-
-
 extern FR_INT4 NUM_THREADS;
 /***********************************************************************
 * Function siccg88 loest Gleichungssysteme mit dem Konjugierte
@@ -267,22 +265,43 @@ for(int k= 1; k <= maxit; k++)
     * Hilfsvektor zz(k)= A x g(k)
     *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 	  
-	  # pragma omp single
-	  {
-		  zz[1]= GS[1]*pk[1];
+	  # pragma omp single 
+      {
+		zz[1]= GS[1]*pk[1];
+		sumnen= 0.;
+      }
 
-		  for(int i= 2; i <= nfg; i++)
-			{
-			zz[i]= GS[ip[i]] * pk[i];
-			for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
-			  {
-			  zz[i]     += GS[j] * pk[iez[j]];
-			  zz[iez[j]]+= GS[j] * pk[i];
-			  }
-			}
-		  sumnen= 0.;			    	
-	   }
-   
+      #pragma omp for
+	  for(int i= 2; i <= nfg; i++)
+		{
+        FR_DOUBLE sum = GS[ip[i]] * pk[i];
+		for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
+		  {
+		  sum += GS[j] * pk[iez[j]];
+		  }
+        zz[i] = sum;
+		}
+
+      #pragma omp for reduction(+:zz[0:nfg])
+	  for(int i= 2; i <= nfg; i++)
+		{
+		for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
+		  {
+		  zz[iez[j]] += GS[j] * pk[i];
+		  }
+		}
+
+      /*# pragma omp single 
+	  for(int i= 2; i <= nfg; i++)
+		{
+		zz[i]= GS[ip[i]] * pk[i];
+		for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
+		  {
+		  zz[i]     += GS[j] * pk[iez[j]];
+		  zz[iez[j]]+= GS[j] * pk[i];
+		  }
+		}*/
+
 
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     * Nenner g(k) x zz(k) = g(k) x (A x g(k))
