@@ -12,7 +12,7 @@ DIROUT = $(DIRECA)/bin/unix64
 FOPT-INFO = vec-missed
 
 CC = gcc
-CFLAGS = -g -pg -fopenmp -I$(DIRCOM) -DFR_UNIX -DFR_XDOUB -DFR_XLONG -DFR_LINUX -O2
+CFLAGS = -g -pg -fopenmp -I$(DIRCOM) -DFR_UNIX -DFR_XDOUB -DFR_XLONG -DFR_LINUX -O2 -lm -lmpascalops
 
 LDLIBSOX = -lm -lc 
 
