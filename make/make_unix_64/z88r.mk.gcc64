@@ -4,7 +4,7 @@
 # 7.3.2017 Rieg
 #############################################################################
 #DIRECA = $(HOME)/z88v15os
-DIRECA = /home/gabrielnsd/Documents/UFRN/PCD/projeto/Z88OS
+DIRECA = ../..
 DIRUNI = $(DIRECA)/src/z88r/unix
 DIRCOM = $(DIRECA)/src/z88r/common
 DIROUT = $(DIRECA)/bin/unix64
