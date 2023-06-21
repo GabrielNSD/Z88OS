@@ -44,6 +44,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>
 #endif
 
 /****************************************************************************
@@ -288,6 +289,12 @@ int main(int argc,char *argv[])
 FR_INT4 i,k;
 int     iret;
 char    cflag[10],cflagul[10];
+
+// Specify a path to read files from
+if (argc == 4)
+{
+  chdir(argv[3]);
+}
 
 /****************************************************************************
 * Sprache feststellen
