@@ -184,7 +184,6 @@ wrim88r(0,TX_CR);
 	sumzae,sumnen,nfg,eps,converged,maxit) \
     private(rho0,rho1,e,q) 
 {
-  printf("Number of active threads: %d\n", omp_get_num_threads());
 
 /*----------------------------------------------------------------------
 * Vektoren v,xi,xa,pk und zz auf Null setzen

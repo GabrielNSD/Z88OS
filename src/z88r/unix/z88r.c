@@ -291,9 +291,9 @@ int     iret;
 char    cflag[10],cflagul[10];
 
 // Specify a path to read files from
-if (argc == 4)
+if (argc == 2)
 {
-  chdir(argv[3]);
+  chdir(argv[1]);
 }
 
 /****************************************************************************
@@ -316,18 +316,19 @@ who88r();
 /****************************************************************************
 * Die Flags abfragen
 ****************************************************************************/
-if(argc <= 2)
-  {
-  ale88r(AL_NOCFLAG); 
-  stop88r();              
-  }
+// if(argc <= 2)
+//   {
+//   ale88r(AL_NOCFLAG); 
+//   stop88r();              
+//   }
 
 /*===========================================================================
 * 1.Flag
 *==========================================================================*/
 ifnili= 0;
 
-strcpy(cflagul,argv[1]);  
+//strcpy(cflagul,argv[1]);
+strcpy(cflagul,"-c");  
 for(i= 0; i < 6; i++)
   cflag[i]= toupper(cflagul[i]);
   
@@ -348,7 +349,8 @@ else
 *==========================================================================*/
 ICFLAG = 0;
 
-strcpy(cflagul,argv[2]);  
+//strcpy(cflagul,argv[2]);  
+strcpy(cflagul,"-siccg");
 for(i= 0; i < 7; i++)
   cflag[i]= toupper(cflagul[i]);
   

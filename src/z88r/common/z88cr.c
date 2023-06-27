@@ -445,18 +445,7 @@ if(ICFLAG == 1)
   wrim88r(nfg,TX_NFG);
 
 
-  struct timeval ts,te;
-
-  gettimeofday(&ts,NULL);
   siccg88();
-  gettimeofday(&te,NULL);
-
-  int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
-  struct timeval tc;
-  tc.tv_sec = microseconds/1000000;
-  tc.tv_usec = microseconds%1000000;
-
-  printf("\nexecution time siccg: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
   }
 
 if(ICFLAG == 2)
@@ -476,15 +465,6 @@ for(i = 1;i <= nfg;i++)
 /***********************************************************************
 * Ende, andrucken in Z88R
 ***********************************************************************/
-gettimeofday(&te, NULL);
-
-int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
-int milliseconds = microseconds/1000;
-struct timeval tc;
-tc.tv_sec = microseconds/1000000;
-tc.tv_usec = microseconds%1000000;
-
-printf("\nexecution time z88cr: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
 
 wlog88r(0,LOG_EXITZ88CC);
 return(0);
