@@ -48,8 +48,6 @@
 * 2.1.2010 Rieg
 ***********************************************************************/
 
-#define NUM_THREADS 5
-
 
 #include <sys/time.h>
 #include <stdbool.h>
@@ -182,7 +180,7 @@ for(k= 1;k <= 1000; k++)
 
 wrim88r(0,TX_CR);
 
-# pragma omp parallel num_threads(NUM_THREADS) default(none) \
+# pragma omp parallel default(none) \
     shared(xi,xa,rs,v,zz,GS,pk,ip,iez,GS2,ip2,iez2, \
 	sumzae,sumnen,nfg,eps,converged,maxit) \
     private(rho0,rho1,e,q) 
@@ -414,7 +412,7 @@ facto= 1./(1.+rp);
 
 CI[1]= GS[1];
 
-# pragma omp parallel for num_threads(NUM_THREADS) schedule(static, 8)
+# pragma omp parallel for schedule(static, 8)
 for(i= 2; i <= nfg; i++)
   {
   CI[ip[i]]= GS[ip[i]];
