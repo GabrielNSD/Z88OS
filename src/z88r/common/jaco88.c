@@ -48,6 +48,9 @@
 * 2.1.2010 Rieg
 ***********************************************************************/
 
+#define NUM_THREADS 5
+
+
 #include <sys/time.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -179,7 +182,7 @@ for(k= 1;k <= 1000; k++)
 
 wrim88r(0,TX_CR);
 
-# pragma omp parallel default(none) \
+# pragma omp parallel num_threads(NUM_THREADS) default(none) \
     shared(xi,xa,rs,v,zz,GS,pk,ip,iez,GS2,ip2,iez2, \
 	sumzae,sumnen,nfg,eps,converged,maxit) \
     private(rho0,rho1,e,q) 
@@ -288,13 +291,53 @@ for(int k= 1; k <= maxit; k++)
           zz[i] = sum;  
       } 
 	  
+      /*
+      # pragma omp single 
+      {
+        zz[1]= GS[1]*pk[1];
+        sumnen= 0.;
+      }	
+	  
+      #pragma omp for
+      for(int i= 1; i <= nfg; i++)
+        {
+        FR_DOUBLE sum = GS[ip[i]] * pk[i];
+        for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
+          {
+          sum += GS[j] * pk[iez[j]];
+          }
+        zz[i] = sum;
+        }
+
+	  # pragma omp single
+      for(int i= 2; i <= nfg; i++)
+        {
+        for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
+          {
+          zz[iez[j]] += GS[j] * pk[i];
+          }
+        }
+	  */	
+
+      /* 
+      # pragma omp single 
+      for(int i= 2; i <= nfg; i++)
+        {
+        zz[i]= GS[ip[i]] * pk[i];
+        for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
+          {
+          zz[i]     += GS[j] * pk[iez[j]];
+          zz[iez[j]]+= GS[j] * pk[i];
+          }
+        }
+		*/
 
 
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     * Nenner g(k) x zz(k) = g(k) x (A x g(k))
     *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
          
-    # pragma omp single nowait 
+      # pragma omp single nowait 
 	  sumnen = 0.;			 
 		 
       # pragma omp for reduction(+:sumnen)
@@ -348,6 +391,9 @@ return(0);
 ***********************************************************************/
 int part88(void)
 {
+//struct timeval ts,te;
+
+//gettimeofday(&ts,NULL);
 extern FR_DOUBLEAY GS;
 extern FR_DOUBLEAY CI;
 
@@ -368,7 +414,7 @@ facto= 1./(1.+rp);
 
 CI[1]= GS[1];
 
-# pragma omp parallel for schedule(static, 8)
+# pragma omp parallel for num_threads(NUM_THREADS) schedule(static, 8)
 for(i= 2; i <= nfg; i++)
   {
   CI[ip[i]]= GS[ip[i]];
@@ -400,6 +446,13 @@ for(i= 2; i <= nfg; i++)
 /*----------------------------------------------------------------------
 * alles in Ordnung
 *---------------------------------------------------------------------*/
+//gettimeofday(&te,NULL);
+//int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
+//struct timeval tc;
+//tc.tv_sec = microseconds/1000000;
+//tc.tv_usec = microseconds%1000000;
+
+//printf("\nexecution time part88: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
 return 0;   /* alles paletti */
 }
 
@@ -410,6 +463,9 @@ return 0;   /* alles paletti */
 
 int cixa88(void)
 {
+//struct timeval ts,te;
+
+//gettimeofday(&ts,NULL);
 extern FR_DOUBLEAY CI;
 extern FR_DOUBLEAY xa;
 extern FR_DOUBLEAY xi;
@@ -444,6 +500,13 @@ for(int k= nfg; k >= 2; k--)
   }
   }
 
+//gettimeofday(&te,NULL);
+//int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
+//struct timeval tc;
+//tc.tv_sec = microseconds/1000000;
+//tc.tv_usec = microseconds%1000000;
+
+//printf("\nexecution time cixa88: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
 return 0;
 }
 
