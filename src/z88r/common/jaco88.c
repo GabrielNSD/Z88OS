@@ -48,9 +48,11 @@
 * 2.1.2010 Rieg
 ***********************************************************************/
 
+#define NUM_THREADS 5
+
+
 #include <sys/time.h>
 #include <stdbool.h>
-#include <stdlib.h>
 
 /***********************************************************************
 * Fuer UNIX
@@ -81,7 +83,6 @@ int wlog88r(FR_INT4,int);
 int wrim88r(FR_INT4,int);
 int cixa88(void);
 int part88(void);
-void csr_to_csc(FR_DOUBLEAY GS2, FR_INT4AY iez2, FR_INT4AY ip2);
 
 /***********************************************************************
 * hier beginnt Function scal88i
@@ -155,11 +156,6 @@ FR_DOUBLE sumnen,sumzae,q,rho0,rho1,e;
 FR_INT4 j,i,k;
 
 bool converged = false;
-FR_INT4 nnz = ip[nfg];
-FR_DOUBLEAY GS2 = (FR_DOUBLEAY) FR_CALLOC((nnz+1),sizeof(FR_DOUBLE)); 
-FR_INT4AY iez2  = (FR_INT4AY) FR_CALLOC((nnz+1),sizeof(FR_INT4));
-FR_INT4AY ip2   = (FR_INT4AY) FR_CALLOC((nfg+1),sizeof(FR_INT4));
-csr_to_csc(GS2, iez2, ip2);
 
 /*----------------------------------------------------------------------
 * Start: partielle Cholesky- Zerlegung durchfuehren
@@ -179,10 +175,9 @@ for(k= 1;k <= 1000; k++)
 
 wrim88r(0,TX_CR);
 
-# pragma omp parallel default(none) \
-    shared(xi,xa,rs,v,zz,GS,pk,ip,iez,GS2,ip2,iez2, \
-	sumzae,sumnen,nfg,eps,converged,maxit) \
-    private(rho0,rho1,e,q) 
+# pragma omp parallel num_threads(NUM_THREADS) default(none) \
+    shared(xi,xa,rs,v,zz,GS,pk,ip,iez,sumzae,sumnen,nfg,eps,converged,maxit) \
+	private(rho0,rho1,e,q) 
 {
 
 /*----------------------------------------------------------------------
@@ -213,7 +208,7 @@ for(int k= 1; k <= maxit; k++)
     * Loese Gleichungssystem CI * CIt * xa = xi
     *=====================================================================*/
       cixa88();
-      sumzae= 0.;
+	  sumzae= 0.;
     }
   
     /*======================================================================
@@ -246,17 +241,17 @@ for(int k= 1; k <= maxit; k++)
       # pragma omp for
       for(int i= 1; i <= nfg; i++)
         rs[i]= v[i];
-    
+	
       # pragma omp single
       {
       wrim88r(0,TX_JACOOK);
       wlog88r(k,LOG_ITERA);
       converged = true; 
       }
-      break;
+	  break;
       }
 
-    
+	
     //if(converged) return 0;
     /*======================================================================
     * ansonsten weitermachen
@@ -265,55 +260,78 @@ for(int k= 1; k <= maxit; k++)
     * g(k) = e(k-1) x g(k-1) - rho(k-1)
     *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       //sumnen= 0.;
-      # pragma omp for
+	  # pragma omp for
       for(i= 1; i <= nfg; i++)
         pk[i]= e*pk[i] - xa[i];
 
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     * Hilfsvektor zz(k)= A x g(k)
     *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-      #pragma omp for  
-      for(int i=1; i <= nfg; i++)
-      {
-          FR_DOUBLE sum = 0.0; 
-		  for(int j=ip[i-1]+1; j <= ip[i]; j++)
-			{
-			sum += GS[j] * pk[iez[j]];
-			} 
-		  for(int j= ip2[i-1]+2; j <= ip2[i]; j++)
-			{
-			sum += GS2[j] * pk[iez2[j]];
-			}   
-          zz[i] = sum;  
-      } 
 	  
+	  # pragma omp single 
+      {
+		zz[1]= GS[1]*pk[1];
+		sumnen= 0.;
+      }
+
+	  //#pragma omp parallel for
+      //# pragma omp single 
+      
+      #pragma omp for
+	  for(int i= 2; i <= nfg; i++)
+		{
+        FR_DOUBLE sum = GS[ip[i]] * pk[i];
+		for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
+		  {
+		  sum += GS[j] * pk[iez[j]];
+		  }
+        zz[i] = sum;
+		}
+
+      # pragma omp single 
+	  for(int i= 2; i <= nfg; i++)
+		{
+		for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
+		  {
+		  zz[iez[j]]+= GS[j] * pk[i];
+		  }
+		} 
+      
+
+      /*# pragma omp single 
+	  for(int i= 2; i <= nfg; i++)
+		{
+		zz[i]= GS[ip[i]] * pk[i];
+		for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
+		  {
+		  zz[i]     += GS[j] * pk[iez[j]];
+		  zz[iez[j]]+= GS[j] * pk[i];
+		  }
+		}*/
 
 
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     * Nenner g(k) x zz(k) = g(k) x (A x g(k))
     *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-         
-    # pragma omp single nowait 
-	  sumnen = 0.;			 
-		 
-      # pragma omp for reduction(+:sumnen)
+      
+	  
+	  # pragma omp for reduction(+:sumnen)
       for(i= 1; i <= nfg; i++)
         sumnen+= pk[i] * zz[i];
-        
+		
 
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       * qk= r(k-1) x rho(k-1) / [g(k) x (A x g(k))]
       *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       q= sumzae/sumnen;
 
-    
+	
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     * v(k)= v(k-1) + qk x g(k)
     * r(k)= r(k-1) + qk x (A x g(k))
     *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    
-      # pragma omp for
+	
+	  # pragma omp for
       for(i= 1; i <= nfg; i++)
         {
         v [i]+= q * pk[i];
@@ -325,10 +343,6 @@ for(int k= 1; k <= maxit; k++)
 
 } // fim da regiao paralela
 
-
-free(GS2);
-free(iez2);
-free(ip2);
 if(converged) return 0;
 
 /*----------------------------------------------------------------------
@@ -348,6 +362,9 @@ return(0);
 ***********************************************************************/
 int part88(void)
 {
+//struct timeval ts,te;
+
+//gettimeofday(&ts,NULL);
 extern FR_DOUBLEAY GS;
 extern FR_DOUBLEAY CI;
 
@@ -368,7 +385,7 @@ facto= 1./(1.+rp);
 
 CI[1]= GS[1];
 
-# pragma omp parallel for schedule(static, 8)
+# pragma omp parallel for num_threads(NUM_THREADS) schedule(static, 8)
 for(i= 2; i <= nfg; i++)
   {
   CI[ip[i]]= GS[ip[i]];
@@ -400,6 +417,13 @@ for(i= 2; i <= nfg; i++)
 /*----------------------------------------------------------------------
 * alles in Ordnung
 *---------------------------------------------------------------------*/
+//gettimeofday(&te,NULL);
+//int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
+//struct timeval tc;
+//tc.tv_sec = microseconds/1000000;
+//tc.tv_usec = microseconds%1000000;
+
+//printf("\nexecution time part88: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
 return 0;   /* alles paletti */
 }
 
@@ -410,6 +434,9 @@ return 0;   /* alles paletti */
 
 int cixa88(void)
 {
+//struct timeval ts,te;
+
+//gettimeofday(&ts,NULL);
 extern FR_DOUBLEAY CI;
 extern FR_DOUBLEAY xa;
 extern FR_DOUBLEAY xi;
@@ -444,6 +471,13 @@ for(int k= nfg; k >= 2; k--)
   }
   }
 
+//gettimeofday(&te,NULL);
+//int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
+//struct timeval tc;
+//tc.tv_sec = microseconds/1000000;
+//tc.tv_usec = microseconds%1000000;
+
+//printf("\nexecution time cixa88: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
 return 0;
 }
 
@@ -604,51 +638,5 @@ for(i= 1; i <= nfg; i++)
   rs[i]= v[i];
 
 return(0);
-}
-
-extern FR_DOUBLEAY GS;
-extern FR_DOUBLEAY rs;
-extern FR_DOUBLEAY fak;
-
-extern FR_INT4AY ip;
-extern FR_INT4AY iez;
-
-extern FR_INT4 nfg;
-
-
-void csr_to_csc(FR_DOUBLEAY GS2, FR_INT4AY iez2, FR_INT4AY ip2)
-{
-    FR_INT4 i, j, nnz, col, dest;
-    FR_INT4 cnt[nfg+1];
-
-   	nnz = ip[nfg];
-	for (i=1; i<=nnz; i++) {
-	   GS2[i] = 0.0;
-	   iez2[i] = 0.0;		
-	}     
-	for (i=1; i<=nfg; i++) {
-	   cnt[i] = 0;
-	}
-	for (i=1; i<=nnz; i++) {
-      col = iez[i];
-      cnt[col] += 1;	
-	}
-	ip2[1] = cnt[1];
-	for (i=2; i<=nfg; i++) {
-       ip2[i] = ip2[i-1] + cnt[i];	
-	}     
-	for (i=1; i<=nfg; i++) {      
-        for (j=ip[i-1]+1; j<=ip[i]; j++) {            
-          col = iez[j];
-          dest = ip2[col-1]+1;
-          iez2[dest] = i;
-          GS2[dest] = GS[j];
-          ip2[col-1] = ip2[col-1] + 1;             
-        }    
-    }
-	for (i=nfg-1; i>=0; i--) {
-	   ip2[i+1] = ip2[i];
-	} 	    
-    ip2[0] = 0;
 }
 
