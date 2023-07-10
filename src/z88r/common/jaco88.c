@@ -126,8 +126,6 @@ for(i = 1;i <= nfg;i++)
 return(0);
 }
 
-
-extern FR_INT4 NUM_THREADS;
 /***********************************************************************
 * Function siccg88 loest Gleichungssysteme mit dem Konjugierte
 * Gradienten Verfahren und partieller Cholesky- Zerlegung, ruft
@@ -174,7 +172,7 @@ for(k= 1;k <= 1000; k++)
 
 wrim88r(0,TX_CR);
 
-# pragma omp parallel num_threads(NUM_THREADS) default(none) \
+# pragma omp parallel default(none) \
     shared(xi,xa,rs,v,zz,GS,pk,ip,iez,sumzae,sumnen,nfg,eps,converged,maxit) \
 	private(rho0,rho1,e,q) 
 {
@@ -338,7 +336,7 @@ int part88(void)
 {
 struct timeval ts,te;
 
-gettimeofday(&ts,NULL);
+// gettimeofday(&ts,NULL);
 extern FR_DOUBLEAY GS;
 extern FR_DOUBLEAY CI;
 
@@ -359,7 +357,7 @@ facto= 1./(1.+rp);
 
 CI[1]= GS[1];
 
-# pragma omp parallel for num_threads(NUM_THREADS) schedule(static, 8)
+# pragma omp parallel for schedule(static, 8)
 for(i= 2; i <= nfg; i++)
   {
   CI[ip[i]]= GS[ip[i]];
@@ -391,13 +389,13 @@ for(i= 2; i <= nfg; i++)
 /*----------------------------------------------------------------------
 * alles in Ordnung
 *---------------------------------------------------------------------*/
-gettimeofday(&te,NULL);
-int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
-struct timeval tc;
-tc.tv_sec = microseconds/1000000;
-tc.tv_usec = microseconds%1000000;
+// gettimeofday(&te,NULL);
+// int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
+// struct timeval tc;
+// tc.tv_sec = microseconds/1000000;
+// tc.tv_usec = microseconds%1000000;
 
-printf("\nexecution time part88: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
+// printf("\nexecution time part88: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
 return 0;   /* alles paletti */
 }
 
@@ -410,7 +408,7 @@ int cixa88(void)
 {
 struct timeval ts,te;
 
-gettimeofday(&ts,NULL);
+// gettimeofday(&ts,NULL);
 extern FR_DOUBLEAY CI;
 extern FR_DOUBLEAY xa;
 extern FR_DOUBLEAY xi;
@@ -445,13 +443,13 @@ for(int k= nfg; k >= 2; k--)
   }
   }
 
-gettimeofday(&te,NULL);
-int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
-struct timeval tc;
-tc.tv_sec = microseconds/1000000;
-tc.tv_usec = microseconds%1000000;
+// gettimeofday(&te,NULL);
+// int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
+// struct timeval tc;
+// tc.tv_sec = microseconds/1000000;
+// tc.tv_usec = microseconds%1000000;
 
-printf("\nexecution time cixa88: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
+// printf("\nexecution time cixa88: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
 return 0;
 }
 
