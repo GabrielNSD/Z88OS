@@ -1,654 +1,783 @@
 /***********************************************************************
-*
-*               *****   ***    ***
-*                  *   *   *  *   *
-*                 *     ***    ***
-*                *     *   *  *   *
-*               *****   ***    ***
-*
-* A FREE Finite Elements Analysis Program in ANSI C for the Windows &
-* UNIX OS.
-*
-* Composed and edited and copyright by
-* Professor Dr.-Ing. Frank Rieg, University of Bayreuth, Germany
-*
-* eMail:
-* frank.rieg@uni-bayreuth.de
-* dr.frank.rieg@t-online.de
-*
-* V15.0 November 18, 2015
-*
-* Z88 should compile and run under any UNIX OS and Windows.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2, or (at your option)
-* any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; see the file COPYING.  If not, write to
-* the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
-***********************************************************************/
+ *
+ *               *****   ***    ***
+ *                  *   *   *  *   *
+ *                 *     ***    ***
+ *                *     *   *  *   *
+ *               *****   ***    ***
+ *
+ * A FREE Finite Elements Analysis Program in ANSI C for the Windows &
+ * UNIX OS.
+ *
+ * Composed and edited and copyright by
+ * Professor Dr.-Ing. Frank Rieg, University of Bayreuth, Germany
+ *
+ * eMail:
+ * frank.rieg@uni-bayreuth.de
+ * dr.frank.rieg@t-online.de
+ *
+ * V15.0 November 18, 2015
+ *
+ * Z88 should compile and run under any UNIX OS and Windows.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; see the file COPYING.  If not, write to
+ * the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ ***********************************************************************/
 /***********************************************************************
-* Diese Compilerunit enthaelt:
-* scal88i
-* siccg88
-* part88
-* cixa88
-* sorcg88
-* Konjugierte Gradienten mit entweder
-* - partieller Cholesky- Zerlegung oder
-* - Vorkonditionierung mit SSOR
-* basiert gedanklich auf FORTRAN-Programmen von H.R.Schwarz,Uni Zuerich
-* 2.1.2010 Rieg
-***********************************************************************/
+ * Diese Compilerunit enthaelt:
+ * scal88i
+ * siccg88
+ * part88
+ * cixa88
+ * sorcg88
+ * Konjugierte Gradienten mit entweder
+ * - partieller Cholesky- Zerlegung oder
+ * - Vorkonditionierung mit SSOR
+ * basiert gedanklich auf FORTRAN-Programmen von H.R.Schwarz,Uni Zuerich
+ * 2.1.2010 Rieg
+ ***********************************************************************/
 
-#include <sys/time.h>
+#define MAX_ITER_GS 10
+
 #include <stdbool.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
 /***********************************************************************
-* Fuer UNIX
-***********************************************************************/
+ * Fuer UNIX
+ ***********************************************************************/
 #ifdef FR_UNIX
-#include <z88r.h>
 #include <stdio.h>
+#include <z88r.h>
 #endif
 
 /***********************************************************************
-* Fuer Windows
-***********************************************************************/
+ * Fuer Windows
+ ***********************************************************************/
 #ifdef FR_WIN
 #include <z88r.h>
 #endif
 
 /***********************************************************************
-* Fuer Windows und GTK+
-***********************************************************************/
+ * Fuer Windows und GTK+
+ ***********************************************************************/
 #ifdef FR_GTKWIN
 #include <z88r.h>
 #endif
 
 /***********************************************************************
-*  Functions
-***********************************************************************/
-int wlog88r(FR_INT4,int);
-int wrim88r(FR_INT4,int);
+ *  Functions
+ ***********************************************************************/
+int wlog88r(FR_INT4, int);
+int wrim88r(FR_INT4, int);
 int cixa88(void);
 int part88(void);
-void csr_to_csc(FR_DOUBLEAY GS2, FR_INT4AY iez2, FR_INT4AY ip2);
+// void csr_to_csc(FR_DOUBLEAY GS2, FR_INT4AY iez2, FR_INT4AY ip2);
+void csr_to_csc(FR_DOUBLEAY GS2, FR_DOUBLEAY CI2, FR_INT4AY iez2, FR_INT4AY ip2);
+void diag_dom(FR_DOUBLEAY GS2, FR_INT4AY iez2, FR_INT4AY ip2);
 
 /***********************************************************************
-* hier beginnt Function scal88i
-***********************************************************************/
+ * hier beginnt Function scal88i
+ ***********************************************************************/
 int scal88i(void)
 {
-extern FR_DOUBLEAY GS;
-extern FR_DOUBLEAY rs;
-extern FR_DOUBLEAY fak;
+    extern FR_DOUBLEAY GS;
+    extern FR_DOUBLEAY rs;
+    extern FR_DOUBLEAY fak;
 
-extern FR_INT4AY ip;
-extern FR_INT4AY iez;
+    extern FR_INT4AY ip;
+    extern FR_INT4AY iez;
 
-extern FR_INT4 nfg;
+    extern FR_INT4 nfg;
 
-FR_INT4 i,j;
+    FR_INT4 i, j;
 
-/*----------------------------------------------------------------------
-* Start Function
-*---------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------
+     * Start Function
+     *---------------------------------------------------------------------*/
 
-/***********************************************************************
-* Scalierungsfaktoren berechnen und rechte Seite umrechnen
-***********************************************************************/
-for(i = 1;i <= nfg;i++)
-  {
-  if(GS[ip[i]] <= 0.)
-    {
-    wlog88r(i,LOG_DIAGNULL);
-    return(AL_DIAGNULL);
+    /***********************************************************************
+     * Scalierungsfaktoren berechnen und rechte Seite umrechnen
+     ***********************************************************************/
+    for (i = 1; i <= nfg; i++) {
+        if (GS[ip[i]] <= 0.) {
+            wlog88r(i, LOG_DIAGNULL);
+            return (AL_DIAGNULL);
+        }
+
+        fak[i] = 1. / FR_SQRT(GS[ip[i]]);
+        GS[ip[i]] = 1.0;
+        rs[i] *= fak[i];
+
+        if (i == 1)
+            continue;
+
+        for (j = ip[i - 1] + 1; j <= ip[i] - 1; j++)
+            GS[j] *= fak[i] * fak[iez[j]];
     }
 
-  fak[i]= 1. / FR_SQRT(GS[ip[i]]);
-  GS[ip[i]]= 1.0;
-  rs[i]*= fak[i];
-
-  if(i == 1) continue;
-
-  for(j = ip[i-1]+1;j <= ip[i]-1;j++)
-    GS[j]*= fak[i] * fak[iez[j]];
-
-  }
-
-return(0);
+    return (0);
 }
 
 /***********************************************************************
-* Function siccg88 loest Gleichungssysteme mit dem Konjugierte
-* Gradienten Verfahren und partieller Cholesky- Zerlegung, ruft
-* part88 und cixa88 auf
-***********************************************************************/
+ * Function siccg88 loest Gleichungssysteme mit dem Konjugierte
+ * Gradienten Verfahren und partieller Cholesky- Zerlegung, ruft
+ * part88 und cixa88 auf
+ ***********************************************************************/
 int siccg88(void)
 {
-extern FR_DOUBLEAY GS;
-extern FR_DOUBLEAY CI;
-extern FR_DOUBLEAY rs;
-extern FR_DOUBLEAY xi;
-extern FR_DOUBLEAY xa;
-extern FR_DOUBLEAY v;
-extern FR_DOUBLEAY pk;
-extern FR_DOUBLEAY zz;
+    extern FR_DOUBLEAY GS;
+    extern FR_DOUBLEAY CI;
+    extern FR_DOUBLEAY rs;
+    extern FR_DOUBLEAY xi;
+    extern FR_DOUBLEAY xa;
+    extern FR_DOUBLEAY v;
+    extern FR_DOUBLEAY pk;
+    extern FR_DOUBLEAY zz;
 
-extern FR_INT4AY ip;
-extern FR_INT4AY iez;
+    extern FR_INT4AY ip;
+    extern FR_INT4AY iez;
 
-extern FR_DOUBLE rp,rpalpha,eps;
-extern FR_INT4 nfg,maxit;
+    extern FR_DOUBLE rp, rpalpha, eps;
+    extern FR_INT4 nfg, maxit;
 
-FR_DOUBLE sumnen,sumzae,q,rho0,rho1,e;
+    FR_DOUBLE sumnen, sumzae, q, rho0, rho1, e;
 
-FR_INT4 j,i,k;
+    FR_INT4 j, i, k;
 
-bool converged = false;
-FR_INT4 nnz = ip[nfg];
-FR_DOUBLEAY GS2 = (FR_DOUBLEAY) FR_CALLOC((nnz+1),sizeof(FR_DOUBLE)); 
-FR_INT4AY iez2  = (FR_INT4AY) FR_CALLOC((nnz+1),sizeof(FR_INT4));
-FR_INT4AY ip2   = (FR_INT4AY) FR_CALLOC((nfg+1),sizeof(FR_INT4));
-csr_to_csc(GS2, iez2, ip2);
+    bool converged = false;
+    FR_INT4 nnz = ip[nfg];
+    FR_DOUBLEAY GS2 = (FR_DOUBLEAY)FR_CALLOC((nnz + 1), sizeof(FR_DOUBLE));
+    FR_DOUBLEAY CI2 = (FR_DOUBLEAY)FR_CALLOC((nnz + 1), sizeof(FR_DOUBLE));
+    FR_DOUBLEAY xi2 = (FR_DOUBLEAY)FR_CALLOC((nfg + 1), sizeof(FR_INT4));
+    FR_INT4AY iez2 = (FR_INT4AY)FR_CALLOC((nnz + 1), sizeof(FR_INT4));
+    FR_INT4AY ip2 = (FR_INT4AY)FR_CALLOC((nfg + 1), sizeof(FR_INT4));
+    csr_to_csc(GS2, CI2, iez2, ip2);
+    // diag_dom(GS2, iez2, ip2);
 
-/*----------------------------------------------------------------------
-* Start: partielle Cholesky- Zerlegung durchfuehren
-*---------------------------------------------------------------------*/
-rp= rpalpha;
+    /*----------------------------------------------------------------------
+     * Start: partielle Cholesky- Zerlegung durchfuehren
+     *---------------------------------------------------------------------*/
+    rp = rpalpha;
 
-for(k= 1;k <= 1000; k++)
-  {
-  wrim88r(k,TX_PART88);
-  if(part88() == 0) break;
-  else
-    {
-    if(rp <= 1e-10) rp= 0.00005;
-    rp+= rp;
-   }
-  }
-
-wrim88r(0,TX_CR);
-
-# pragma omp parallel default(none) \
-    shared(xi,xa,rs,v,zz,GS,pk,ip,iez,GS2,ip2,iez2, \
-	sumzae,sumnen,nfg,eps,converged,maxit) \
-    private(rho0,rho1,e,q) 
-{
-
-/*----------------------------------------------------------------------
-* Vektoren v,xi,xa,pk und zz auf Null setzen
-*---------------------------------------------------------------------*/
-# pragma omp for
-for(i= 1; i <= nfg; i++)
-  {
-  xi[i]= -rs[i];
-  v[i] = 0.;
-  xa[i]= 0.;
-  pk[i]= 0.;
-  zz[i]= 0.;
-  }
-
-/*----------------------------------------------------------------------
-* Iterationsschleife
-*---------------------------------------------------------------------*/
-
-for(int k= 1; k <= maxit; k++)
-  {
-
-    # pragma omp single
-    {
-      wrim88r(k,TX_ITERA);
-  
-    /*======================================================================
-    * Loese Gleichungssystem CI * CIt * xa = xi
-    *=====================================================================*/
-      cixa88();
-      sumzae= 0.;
+    for (k = 1; k <= 1000; k++) {
+        wrim88r(k, TX_PART88);
+        if (part88() == 0)
+            break;
+        else {
+            if (rp <= 1e-10)
+                rp = 0.00005;
+            rp += rp;
+        }
     }
-  
-    /*======================================================================
-    * r x rho
-    *=====================================================================*/
 
-    # pragma omp for reduction(+:sumzae)
-    for(i= 1; i <= nfg; i++)
-      sumzae+= xi[i] * xa[i];
-  
-    /*======================================================================
-    * Sonderfall k= 1
-    *=====================================================================*/
-      if(k == 1)
-        {
-        rho0= sumzae*eps;
-        e= 0.;
-        }
-      else
-        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        * e(k-1)= r(k-1) x rho(k-1) / r(k-2) x rho(k-2)
-        *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-        e= sumzae/rho1;
-  
-    /*======================================================================
-    * Residuum erreicht ? Auf Wiedersehen.
-    *=====================================================================*/
-    if(sumzae <= rho0)
-      {
-      # pragma omp for
-      for(int i= 1; i <= nfg; i++)
-        rs[i]= v[i];
-    
-      # pragma omp single
-      {
-      wrim88r(0,TX_JACOOK);
-      wlog88r(k,LOG_ITERA);
-      converged = true; 
-      }
-      break;
-      }
+    wrim88r(0, TX_CR);
 
-    
-    //if(converged) return 0;
-    /*======================================================================
-    * ansonsten weitermachen
-    *=====================================================================*/
-    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    * g(k) = e(k-1) x g(k-1) - rho(k-1)
-    *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-      //sumnen= 0.;
-      # pragma omp for
-      for(i= 1; i <= nfg; i++)
-        pk[i]= e*pk[i] - xa[i];
-
-    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    * Hilfsvektor zz(k)= A x g(k)
-    *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-      #pragma omp for  
-      for(int i=1; i <= nfg; i++)
-      {
-          FR_DOUBLE sum = 0.0; 
-		  for(int j=ip[i-1]+1; j <= ip[i]; j++)
-			{
-			sum += GS[j] * pk[iez[j]];
-			} 
-		  for(int j= ip2[i-1]+2; j <= ip2[i]; j++)
-			{
-			sum += GS2[j] * pk[iez2[j]];
-			}   
-          zz[i] = sum;  
-      } 
-	  
-
-
-    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    * Nenner g(k) x zz(k) = g(k) x (A x g(k))
-    *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-         
-    # pragma omp single nowait 
-	  sumnen = 0.;			 
-		 
-      # pragma omp for reduction(+:sumnen)
-      for(i= 1; i <= nfg; i++)
-        sumnen+= pk[i] * zz[i];
-        
-
-      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      * qk= r(k-1) x rho(k-1) / [g(k) x (A x g(k))]
-      *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-      q= sumzae/sumnen;
-
-    
-    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    * v(k)= v(k-1) + qk x g(k)
-    * r(k)= r(k-1) + qk x (A x g(k))
-    *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    
-      # pragma omp for
-      for(i= 1; i <= nfg; i++)
-        {
-        v [i]+= q * pk[i];
-        xi[i]+= q * zz[i];
-        }
-
-      rho1= sumzae;
-  }
-
-} // fim da regiao paralela
-
-
-free(GS2);
-free(iez2);
-free(ip2);
-if(converged) return 0;
+#pragma omp parallel default(none)                                           \
+    shared(xi, xa, rs, v, zz, GS, pk, ip, iez, GS2, ip2, iez2, CI, CI2, xi2, \
+            sumzae, sumnen, nfg, eps, converged, maxit) private(rho0, rho1, e, q)
+    {
 
 /*----------------------------------------------------------------------
-* Residuum nicht erreicht - auch auf Wiedersehen.
-*---------------------------------------------------------------------*/
-wrim88r(0,TX_JACONOTOK);
-wlog88r((k-1),LOG_ITERA);
+ * Vektoren v,xi,xa,pk und zz auf Null setzen
+ *---------------------------------------------------------------------*/
+#pragma omp for
+        for (i = 1; i <= nfg; i++) {
+            xi[i] = -rs[i];
+            v[i] = 0.;
+            xa[i] = 0.;
+            pk[i] = 0.;
+            zz[i] = 0.;
+        }
 
-for(i= 1; i <= nfg; i++)
-  rs[i]= v[i];
+        /*----------------------------------------------------------------------
+         * Iterationsschleife
+         *---------------------------------------------------------------------*/
 
-return(0);
+        for (int k = 1; k <= maxit; k++) {
+
+            // if (k > 0)
+            for (int i = 1; i < MAX_ITER_GS; i++) {
+#pragma omp for
+                for (int k = 1; k <= nfg; k++) {
+                    FR_DOUBLE sum2 = 0.0;
+                    // FR_DOUBLE old = xa[k];
+                    for (int j = ip[k - 1] + 1; j <= ip[k] - 1; j++) {
+                        sum2 += CI[j] * xa[iez[j]];
+                    }
+                    // xa[k] = 1.2 * (xi[k] - sum2) / CI[ip[k]] - 0.2 * old;
+                    xa[k] = (xi[k] - sum2) / CI[ip[k]];
+                }
+            }
+
+            /*
+            # pragma omp for
+            for(int k= nfg; k >= 2; k--)
+            {
+              xi2[k] = xa[k];
+            }
+
+            for (int i = 1; i < 100; i++) {
+                    # pragma omp for
+                    for (int k = 1; k <= nfg; k++) {
+                            FR_DOUBLE sum2 = 0.0;
+                            for (int j = ip2[k - 1] + 2; j <= ip2[k]; j++)
+                                    sum2 += CI2[j] * xa[iez2[j]];
+                            xa[k] = (xi2[k] - sum2) / CI[ip[k]];
+                    }
+            }
+            */
+
+#pragma omp single
+            {
+                wrim88r(k, TX_ITERA);
+
+                /*======================================================================
+                 * Loese Gleichungssystem CI * CIt * xa = xi
+                 *=====================================================================*/
+                // cixa88();
+                sumzae = 0.;
+
+                // if (k > 0)
+                for (int k = nfg; k >= 2; k--) {
+                    xa[k] /= CI[ip[k]];
+                    for (int j = ip[k - 1] + 1; j <= ip[k] - 1; j++) {
+                        xa[iez[j]] = xa[iez[j]] - CI[j] * xa[k];
+                    }
+                }
+                // else
+                // cixa88();
+            }
+
+            /*======================================================================
+             * r x rho
+             *=====================================================================*/
+
+#pragma omp for reduction(+ : sumzae)
+            for (i = 1; i <= nfg; i++)
+                sumzae += xi[i] * xa[i];
+
+            /*======================================================================
+             * Sonderfall k= 1
+             *=====================================================================*/
+            if (k == 1) {
+                rho0 = sumzae * eps;
+                e = 0.;
+            } else
+                /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                 * e(k-1)= r(k-1) x rho(k-1) / r(k-2) x rho(k-2)
+                 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+                e = sumzae / rho1;
+
+            /*======================================================================
+             * Residuum erreicht ? Auf Wiedersehen.
+             *=====================================================================*/
+            if (sumzae <= rho0) {
+#pragma omp for
+                for (int i = 1; i <= nfg; i++)
+                    rs[i] = v[i];
+
+#pragma omp single
+                {
+                    wrim88r(0, TX_JACOOK);
+                    wlog88r(k, LOG_ITERA);
+                    converged = true;
+                }
+                break;
+            }
+
+            // if(converged) return 0;
+            /*======================================================================
+             * ansonsten weitermachen
+             *=====================================================================*/
+            /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+             * g(k) = e(k-1) x g(k-1) - rho(k-1)
+             *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+// sumnen= 0.;
+#pragma omp for
+            for (i = 1; i <= nfg; i++)
+                pk[i] = e * pk[i] - xa[i];
+
+                /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                 * Hilfsvektor zz(k)= A x g(k)
+                 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#pragma omp for
+            for (int i = 1; i <= nfg; i++) {
+                FR_DOUBLE sum = 0.0;
+                for (int j = ip[i - 1] + 1; j <= ip[i]; j++) {
+                    sum += GS[j] * pk[iez[j]];
+                }
+                for (int j = ip2[i - 1] + 2; j <= ip2[i]; j++) {
+                    sum += GS2[j] * pk[iez2[j]];
+                }
+                zz[i] = sum;
+            }
+
+            /*
+            # pragma omp single
+            {
+              zz[1]= GS[1]*pk[1];
+              sumnen= 0.;
+            }
+
+            #pragma omp for
+            for(int i= 1; i <= nfg; i++)
+              {
+              FR_DOUBLE sum = GS[ip[i]] * pk[i];
+              for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
+                {
+                sum += GS[j] * pk[iez[j]];
+                }
+              zz[i] = sum;
+              }
+
+                # pragma omp single
+            for(int i= 2; i <= nfg; i++)
+              {
+              for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
+                {
+                zz[iez[j]] += GS[j] * pk[i];
+                }
+              }
+                */
+
+            /*
+            # pragma omp single
+            for(int i= 2; i <= nfg; i++)
+              {
+              zz[i]= GS[ip[i]] * pk[i];
+              for(int j= ip[i-1]+1; j <= ip[i]-1; j++)
+                {
+                zz[i]     += GS[j] * pk[iez[j]];
+                zz[iez[j]]+= GS[j] * pk[i];
+                }
+              }
+                      */
+
+            /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+             * Nenner g(k) x zz(k) = g(k) x (A x g(k))
+             *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#pragma omp single nowait
+            sumnen = 0.;
+
+#pragma omp for reduction(+ : sumnen)
+            for (i = 1; i <= nfg; i++)
+                sumnen += pk[i] * zz[i];
+
+            /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+             * qk= r(k-1) x rho(k-1) / [g(k) x (A x g(k))]
+             *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+            q = sumzae / sumnen;
+
+            /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+             * v(k)= v(k-1) + qk x g(k)
+             * r(k)= r(k-1) + qk x (A x g(k))
+             *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#pragma omp for
+            for (i = 1; i <= nfg; i++) {
+                v[i] += q * pk[i];
+                xi[i] += q * zz[i];
+            }
+
+            rho1 = sumzae;
+        }
+
+    } // fim da regiao paralela
+
+    free(GS2);
+    free(iez2);
+    free(ip2);
+    free(CI2);
+    free(xi2);
+    if (converged)
+        return 0;
+
+    /*----------------------------------------------------------------------
+     * Residuum nicht erreicht - auch auf Wiedersehen.
+     *---------------------------------------------------------------------*/
+    wrim88r(0, TX_JACONOTOK);
+    wlog88r((k - 1), LOG_ITERA);
+
+    for (i = 1; i <= nfg; i++)
+        rs[i] = v[i];
+
+    return (0);
 }
 
 /***********************************************************************
-* Function part88 fuehrt die partieller Cholesky- Zerlegung aus
-***********************************************************************/
+ * Function part88 fuehrt die partieller Cholesky- Zerlegung aus
+ ***********************************************************************/
 int part88(void)
 {
-extern FR_DOUBLEAY GS;
-extern FR_DOUBLEAY CI;
+    // struct timeval ts,te;
 
-extern FR_INT4AY ip;
-extern FR_INT4AY iez;
+    // gettimeofday(&ts,NULL);
+    extern FR_DOUBLEAY GS;
+    extern FR_DOUBLEAY CI;
 
-extern FR_DOUBLE rp;
-extern FR_INT4 nfg;
+    extern FR_INT4AY ip;
+    extern FR_INT4AY iez;
 
-FR_DOUBLE facto;
+    extern FR_DOUBLE rp;
+    extern FR_INT4 nfg;
 
-FR_INT4 j,i,k,l;
+    FR_DOUBLE facto;
 
-/*----------------------------------------------------------------------
-* Start Function
-*---------------------------------------------------------------------*/
-facto= 1./(1.+rp);
+    FR_INT4 j, i, k, l;
 
-CI[1]= GS[1];
+    /*----------------------------------------------------------------------
+     * Start Function
+     *---------------------------------------------------------------------*/
+    facto = 1. / (1. + rp);
 
-# pragma omp parallel for schedule(static, 8)
-for(i= 2; i <= nfg; i++)
-  {
-  CI[ip[i]]= GS[ip[i]];
-  for(j = ip[i-1]+1; j <= ip[i]-1; j++)
-    CI[j]= GS[j]*facto;
-  }
+    CI[1] = GS[1];
 
-for(i= 2; i <= nfg; i++)
-  {
-  for(j= ip[i-1]+1; j <= ip[i]-1; j++)
-    {
-    CI[j]= CI[j] / CI[ip[iez[j]]];
-    for(k= j+1; k <= ip[i]; k++)
-      {
-      for(l= ip[iez[k]-1]+1; l <= ip[iez[k]]; l++)
-        {
-        if(iez[l] > iez[j]) goto L40;
-        if(iez[l] < iez[j]) continue;
-        CI[k]= CI[k] - CI[j] * CI[l];
-        goto L40;
-        }
-      L40:;
-      }
+#pragma omp parallel for schedule(static, 8)
+    for (i = 2; i <= nfg; i++) {
+        CI[ip[i]] = GS[ip[i]];
+        for (j = ip[i - 1] + 1; j <= ip[i] - 1; j++)
+            CI[j] = GS[j] * facto;
     }
-  if(CI[ip[i]] < 1e-6) return 1;
-  CI[ip[i]]= FR_SQRT(CI[ip[i]]);
-  }
 
-/*----------------------------------------------------------------------
-* alles in Ordnung
-*---------------------------------------------------------------------*/
-return 0;   /* alles paletti */
+    for (i = 2; i <= nfg; i++) {
+        for (j = ip[i - 1] + 1; j <= ip[i] - 1; j++) {
+            CI[j] = CI[j] / CI[ip[iez[j]]];
+            for (k = j + 1; k <= ip[i]; k++) {
+                for (l = ip[iez[k] - 1] + 1; l <= ip[iez[k]]; l++) {
+                    if (iez[l] > iez[j])
+                        goto L40;
+                    if (iez[l] < iez[j])
+                        continue;
+                    CI[k] = CI[k] - CI[j] * CI[l];
+                    goto L40;
+                }
+            L40:;
+            }
+        }
+        if (CI[ip[i]] < 1e-6)
+            return 1;
+        CI[ip[i]] = FR_SQRT(CI[ip[i]]);
+    }
+
+    /*----------------------------------------------------------------------
+     * alles in Ordnung
+     *---------------------------------------------------------------------*/
+    // gettimeofday(&te,NULL);
+    // int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
+    // struct timeval tc;
+    // tc.tv_sec = microseconds/1000000;
+    // tc.tv_usec = microseconds%1000000;
+
+    // printf("\nexecution time part88: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
+    return 0; /* alles paletti */
 }
 
 /***********************************************************************
-* Function cixa88 loest Gleichungssysteme CI * CIt * xa = pk
-***********************************************************************/
+ * Function cixa88 loest Gleichungssysteme CI * CIt * xa = pk
+ ***********************************************************************/
 // * Loese Gleichungssystem CI * CIt * xa = xi
 
 int cixa88(void)
 {
-extern FR_DOUBLEAY CI;
-extern FR_DOUBLEAY xa;
-extern FR_DOUBLEAY xi;
+    // struct timeval ts,te;
 
-extern FR_INT4AY ip;
-extern FR_INT4AY iez;
+    // gettimeofday(&ts,NULL);
+    extern FR_DOUBLEAY CI;
+    extern FR_DOUBLEAY xa;
+    extern FR_DOUBLEAY xi;
 
-extern FR_INT4 nfg;
+    extern FR_INT4AY ip;
+    extern FR_INT4AY iez;
 
-FR_DOUBLE sum;
+    extern FR_INT4 nfg;
 
-FR_INT4 j,k;
+    FR_DOUBLE sum;
 
-/*----------------------------------------------------------------------
-* Start Function
-*---------------------------------------------------------------------*/
-xa[1]= xi[1];
+    FR_INT4 j, k;
 
-for(k= 2; k <= nfg; k++)
-  {
-  sum= 0.;
-  for(j= ip[k-1]+1; j <= ip[k]-1; j++)
-    sum+= CI[j] * xa[iez[j]];
-  xa[k]= (xi[k]-sum)/CI[ip[k]];
-  }
+    /*----------------------------------------------------------------------
+     * Start Function
+     *---------------------------------------------------------------------*/
+    xa[1] = xi[1];
 
-for(int k= nfg; k >= 2; k--)
-  {
-  xa[k]/= CI[ip[k]];
-  for(int j= ip[k-1]+1; j <= ip[k]-1; j++){
-    xa[iez[j]]= xa[iez[j]] - CI[j] * xa[k];
-  }
-  }
+    for (k = 2; k <= nfg; k++) {
+        sum = 0.;
+        for (j = ip[k - 1] + 1; j <= ip[k] - 1; j++)
+            sum += CI[j] * xa[iez[j]];
+        xa[k] = (xi[k] - sum) / CI[ip[k]];
+    }
 
-return 0;
+    for (int k = nfg; k >= 2; k--) {
+        xa[k] /= CI[ip[k]];
+        for (int j = ip[k - 1] + 1; j <= ip[k] - 1; j++) {
+            xa[iez[j]] = xa[iez[j]] - CI[j] * xa[k];
+        }
+    }
+
+    // gettimeofday(&te,NULL);
+    // int microseconds = (te.tv_sec - ts.tv_sec) * 1000000 + ((int)te.tv_usec - (int)ts.tv_usec);
+    // struct timeval tc;
+    // tc.tv_sec = microseconds/1000000;
+    // tc.tv_usec = microseconds%1000000;
+
+    // printf("\nexecution time cixa88: %ld seconds, %ld microseconds\n", tc.tv_sec, tc.tv_usec);
+    return 0;
 }
 
 /***********************************************************************
-* Function sorcg88 loest Gleichungssysteme mit dem Konjugierte
-* Gradienten Verfahren und SSOR- Vorkonditionierung
-***********************************************************************/
+ * Function sorcg88 loest Gleichungssysteme mit dem Konjugierte
+ * Gradienten Verfahren und SSOR- Vorkonditionierung
+ ***********************************************************************/
 int sorcg88(void)
 {
-extern FR_DOUBLEAY GS;
-extern FR_DOUBLEAY rs;
-extern FR_DOUBLEAY xi;
-extern FR_DOUBLEAY xa;
-extern FR_DOUBLEAY v;
-extern FR_DOUBLEAY pk;
-extern FR_DOUBLEAY zz;
+    extern FR_DOUBLEAY GS;
+    extern FR_DOUBLEAY rs;
+    extern FR_DOUBLEAY xi;
+    extern FR_DOUBLEAY xa;
+    extern FR_DOUBLEAY v;
+    extern FR_DOUBLEAY pk;
+    extern FR_DOUBLEAY zz;
 
-extern FR_INT4AY ip;
-extern FR_INT4AY iez;
+    extern FR_INT4AY ip;
+    extern FR_INT4AY iez;
 
-extern FR_DOUBLE rp,rpomega,eps;
-extern FR_INT4 nfg,maxit;
+    extern FR_DOUBLE rp, rpomega, eps;
+    extern FR_INT4 nfg, maxit;
 
-FR_DOUBLE sumnen,sumzae,q,rho0,rho1,e;
+    FR_DOUBLE sumnen, sumzae, q, rho0, rho1, e;
 
-FR_INT4 j,i,k;
+    FR_INT4 j, i, k;
 
-/*----------------------------------------------------------------------
-* Vektoren v,xi,xa,pk und zz auf Null setzen
-*---------------------------------------------------------------------*/
-rp= rpomega;
+    /*----------------------------------------------------------------------
+     * Vektoren v,xi,xa,pk und zz auf Null setzen
+     *---------------------------------------------------------------------*/
+    rp = rpomega;
 
-for(i= 1; i <= nfg; i++)
-  {
-  xi[i]= -rs[i];
-  v[i] = 0.;
-  xa[i]= 0.;
-  pk[i]= 0.;
-  zz[i]= 0.;
-  }
-
-/*----------------------------------------------------------------------
-* Iterationsschleife
-*---------------------------------------------------------------------*/
-for(k= 1; k <= maxit; k++)
-  {
-  wrim88r(k,TX_ITERA);
-
-/*======================================================================
-* Vorkonditionierung
-*=====================================================================*/
-  xa[1]= xi[1];
-
-  for(i= 2; i <= nfg; i++)
-    {
-    sumzae= 0.;
-    for(j= ip[i-1]+1; j <= ip[i]-1; j++)
-      sumzae+= GS[j] * xa[iez[j]];
-    xa[i]= xi[i] - rp * sumzae;
+    for (i = 1; i <= nfg; i++) {
+        xi[i] = -rs[i];
+        v[i] = 0.;
+        xa[i] = 0.;
+        pk[i] = 0.;
+        zz[i] = 0.;
     }
 
-  for(i= nfg; i >= 2; i--)
-    {
-    sumzae= rp * xa[i];
-    for(j= ip[i-1]+1; j <= ip[i]-1; j++)
-      xa[iez[j]]-= sumzae * GS[j];
+    /*----------------------------------------------------------------------
+     * Iterationsschleife
+     *---------------------------------------------------------------------*/
+    for (k = 1; k <= maxit; k++) {
+        wrim88r(k, TX_ITERA);
+
+        /*======================================================================
+         * Vorkonditionierung
+         *=====================================================================*/
+        xa[1] = xi[1];
+
+        for (i = 2; i <= nfg; i++) {
+            sumzae = 0.;
+            for (j = ip[i - 1] + 1; j <= ip[i] - 1; j++)
+                sumzae += GS[j] * xa[iez[j]];
+            xa[i] = xi[i] - rp * sumzae;
+        }
+
+        for (i = nfg; i >= 2; i--) {
+            sumzae = rp * xa[i];
+            for (j = ip[i - 1] + 1; j <= ip[i] - 1; j++)
+                xa[iez[j]] -= sumzae * GS[j];
+        }
+
+        /*======================================================================
+         * Nun Konjugierte Gradienten: r x rho
+         *=====================================================================*/
+        sumzae = 0.;
+        for (i = 1; i <= nfg; i++)
+            sumzae += xi[i] * xa[i];
+
+        /*======================================================================
+         * Sonderfall k= 1
+         *=====================================================================*/
+        if (k == 1) {
+            rho0 = sumzae * eps;
+            e = 0.;
+        } else
+            /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+             * e(k-1)= r(k-1) x rho(k-1) / r(k-2) x rho(k-2)
+             *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+            e = sumzae / rho1;
+
+        /*======================================================================
+         * Residuum erreicht ? Auf Wiedersehen.
+         *=====================================================================*/
+        if (sumzae <= rho0) {
+            for (i = 1; i <= nfg; i++)
+                rs[i] = v[i];
+            wrim88r(0, TX_JACOOK);
+            wlog88r(k, LOG_ITERA);
+            return 0;
+        }
+
+        /*======================================================================
+         * ansonsten weitermachen
+         *=====================================================================*/
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         * g(k) = e(k-1) x g(k-1) - rho(k-1)
+         *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        for (i = 1; i <= nfg; i++)
+            pk[i] = e * pk[i] - xa[i];
+
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         * Hilfsvektor zz(k)= A x g(k)
+         *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        zz[1] = GS[1] * pk[1];
+
+        for (i = 2; i <= nfg; i++) {
+            zz[i] = GS[ip[i]] * pk[i];
+            for (j = ip[i - 1] + 1; j <= ip[i] - 1; j++) {
+                zz[i] += GS[j] * pk[iez[j]];
+                zz[iez[j]] += GS[j] * pk[i];
+            }
+        }
+
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         * Nenner g(k) x zz(k) = g(k) x (A x g(k))
+         *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        sumnen = 0.;
+        for (i = 1; i <= nfg; i++)
+            sumnen += pk[i] * zz[i];
+
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         * qk= r(k-1) x rho(k-1) / [g(k) x (A x g(k))]
+         *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        q = sumzae / sumnen;
+
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         * v(k)= v(k-1) + qk x g(k)
+         * r(k)= r(k-1) + qk x (A x g(k))
+         *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        for (i = 1; i <= nfg; i++) {
+            v[i] += q * pk[i];
+            xi[i] += q * zz[i];
+        }
+
+        rho1 = sumzae;
     }
 
-/*======================================================================
-* Nun Konjugierte Gradienten: r x rho
-*=====================================================================*/
-  sumzae= 0.;
-  for(i= 1; i <= nfg; i++)
-    sumzae+= xi[i] * xa[i];
+    /*----------------------------------------------------------------------
+     * Residuum nicht erreicht - auch auf Wiedersehen.
+     *---------------------------------------------------------------------*/
+    wrim88r(0, TX_JACONOTOK);
+    wlog88r((k - 1), LOG_ITERA);
 
-/*======================================================================
-* Sonderfall k= 1
-*=====================================================================*/
-  if(k == 1)
-    {
-    rho0= sumzae*eps;
-    e= 0.;
-    }
-  else
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* e(k-1)= r(k-1) x rho(k-1) / r(k-2) x rho(k-2)
-*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    e= sumzae/rho1;
+    for (i = 1; i <= nfg; i++)
+        rs[i] = v[i];
 
-/*======================================================================
-* Residuum erreicht ? Auf Wiedersehen.
-*=====================================================================*/
-  if(sumzae <= rho0)
-    {
-    for(i= 1; i <= nfg; i++)
-      rs[i]= v[i];
-    wrim88r(0,TX_JACOOK);
-    wlog88r(k,LOG_ITERA);
-    return 0;
-    }
-
-/*======================================================================
-* ansonsten weitermachen
-*=====================================================================*/
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* g(k) = e(k-1) x g(k-1) - rho(k-1)
-*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  for(i= 1; i <= nfg; i++)
-    pk[i]= e*pk[i] - xa[i];
-
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Hilfsvektor zz(k)= A x g(k)
-*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  zz[1]= GS[1]*pk[1];
-
-  for(i= 2; i <= nfg; i++)
-    {
-    zz[i]= GS[ip[i]] * pk[i];
-    for(j= ip[i-1]+1; j <= ip[i]-1; j++)
-      {
-      zz[i]     += GS[j] * pk[iez[j]];
-      zz[iez[j]]+= GS[j] * pk[i];
-      }
-    }
-
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Nenner g(k) x zz(k) = g(k) x (A x g(k))
-*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  sumnen= 0.;
-  for(i= 1; i <= nfg; i++)
-    sumnen+= pk[i] * zz[i];
-
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* qk= r(k-1) x rho(k-1) / [g(k) x (A x g(k))]
-*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  q= sumzae/sumnen;
-
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* v(k)= v(k-1) + qk x g(k)
-* r(k)= r(k-1) + qk x (A x g(k))
-*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  for(i= 1; i <= nfg; i++)
-    {
-    v [i]+= q * pk[i];
-    xi[i]+= q * zz[i];
-    }
-
-  rho1= sumzae;
-  }
-
-/*----------------------------------------------------------------------
-* Residuum nicht erreicht - auch auf Wiedersehen.
-*---------------------------------------------------------------------*/
-wrim88r(0,TX_JACONOTOK);
-wlog88r((k-1),LOG_ITERA);
-
-for(i= 1; i <= nfg; i++)
-  rs[i]= v[i];
-
-return(0);
+    return (0);
 }
 
 extern FR_DOUBLEAY GS;
 extern FR_DOUBLEAY rs;
+extern FR_DOUBLEAY CI;
 extern FR_DOUBLEAY fak;
-
 extern FR_INT4AY ip;
 extern FR_INT4AY iez;
-
 extern FR_INT4 nfg;
 
-
-void csr_to_csc(FR_DOUBLEAY GS2, FR_INT4AY iez2, FR_INT4AY ip2)
+void csr_to_csc(FR_DOUBLEAY GS2, FR_DOUBLEAY CI2, FR_INT4AY iez2, FR_INT4AY ip2)
 {
     FR_INT4 i, j, nnz, col, dest;
-    FR_INT4 cnt[nfg+1];
+    FR_INT4 cnt[nfg + 1];
 
-   	nnz = ip[nfg];
-	for (i=1; i<=nnz; i++) {
-	   GS2[i] = 0.0;
-	   iez2[i] = 0.0;		
-	}     
-	for (i=1; i<=nfg; i++) {
-	   cnt[i] = 0;
-	}
-	for (i=1; i<=nnz; i++) {
-      col = iez[i];
-      cnt[col] += 1;	
-	}
-	ip2[1] = cnt[1];
-	for (i=2; i<=nfg; i++) {
-       ip2[i] = ip2[i-1] + cnt[i];	
-	}     
-	for (i=1; i<=nfg; i++) {      
-        for (j=ip[i-1]+1; j<=ip[i]; j++) {            
-          col = iez[j];
-          dest = ip2[col-1]+1;
-          iez2[dest] = i;
-          GS2[dest] = GS[j];
-          ip2[col-1] = ip2[col-1] + 1;             
-        }    
+    nnz = ip[nfg];
+    for (i = 1; i <= nnz; i++) {
+        GS2[i] = 0.0;
+        CI2[i] = 0.0;
+        iez2[i] = 0.0;
     }
-	for (i=nfg-1; i>=0; i--) {
-	   ip2[i+1] = ip2[i];
-	} 	    
+    for (i = 1; i <= nfg; i++) {
+        cnt[i] = 0;
+    }
+    for (i = 1; i <= nnz; i++) {
+        col = iez[i];
+        cnt[col] += 1;
+    }
+    ip2[1] = cnt[1];
+    for (i = 2; i <= nfg; i++) {
+        ip2[i] = ip2[i - 1] + cnt[i];
+    }
+    for (i = 1; i <= nfg; i++) {
+        for (j = ip[i - 1] + 1; j <= ip[i]; j++) {
+            col = iez[j];
+            dest = ip2[col - 1] + 1;
+            iez2[dest] = i;
+            GS2[dest] = GS[j];
+            CI2[dest] = CI[j];
+            ip2[col - 1] = ip2[col - 1] + 1;
+        }
+    }
+    for (i = nfg - 1; i >= 0; i--) {
+        ip2[i + 1] = ip2[i];
+    }
     ip2[0] = 0;
 }
 
+void diag_dom(FR_DOUBLEAY GS2, FR_INT4AY iez2, FR_INT4AY ip2)
+{
+    FR_INT4 i, j, k, dom;
+
+    dom = 1;
+    for (k = 1; k <= nfg; k++) {
+        FR_DOUBLE sum = 0.0;
+        for (j = ip[k - 1] + 1; j <= ip[k] - 1; j++) {
+            sum += fabs(GS[j]);
+        }
+        for (j = ip2[k - 1] + 2; j <= ip2[k]; j++)
+            sum += fabs(GS2[j]);
+        printf("sum:%-10g diag:%-10g\n", sum, fabs(GS[ip[k]]));
+        if (sum > fabs(GS[ip[k]]))
+            dom = 0;
+    }
+    if (dom == 1) {
+        printf("-> É diagonal dominante\n");
+    } else {
+        printf("-> Não é diagonal dominante\n");
+    }
+}
+
+/*
+    int iter = 1;
+    do {
+        sentinela = 1;
+            # pragma omp for
+            for (int k = 1; k <= nfg; k++) {
+                    FR_DOUBLE sum2 = 0.0;
+                    FR_DOUBLE old = xa[k];
+                    for (int j = ip[k - 1] + 1; j <= ip[k] - 1; j++) {
+                            sum2 += CI[j] * xa[iez[j]];
+                    }
+                    xa[k] = (xi[k] - sum2) / CI[ip[k]];
+                    if (sentinela==1 && xa[k] != 0.0) {
+                            if (fabs(xa[k]-old)/xa[k] > 1e-2) {
+                                    sentinela=0;
+                            }
+                    }
+            }
+        iter++;
+# pragma omp single
+  printf("iter %d\n",iter);
+
+    } while (sentinela ==0 && iter <= MAX_ITER_GS);
+    */
+	
